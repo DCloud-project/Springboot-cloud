@@ -112,11 +112,13 @@ public class SchoolController {
     @ResponseBody
     @RequestMapping(value = "/getCode",method = RequestMethod.GET)
     public String getCode(@RequestParam(value="code",required = false)String code){
-            QueryWrapper queryWrapper = new QueryWrapper();
-            queryWrapper.eq("code",code);
-            School school1 = schoolService.getOne(queryWrapper);
-            System.out.println("sssssss"+school1.getName());
-            return school1.getName();
+        if(code == null){
+            return "未设置";
+        }
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("code",code);
+        School school1 = schoolService.getOne(queryWrapper);
+        return school1.getName();
     }
     //查询（学校，学院）
     @ResponseBody
@@ -127,6 +129,7 @@ public class SchoolController {
             @RequestParam(value="id",required = false)Integer id,
             @RequestParam(value="info",required = false)Integer info,
             @RequestParam(value="school",required = false)Integer school,
+            @RequestParam(value="schoolCode",required = false)String schoolCode,
             @RequestParam(value="academy",required = false)Integer parentId
     ){
         if(id != null){//获取右侧展开列表
@@ -140,7 +143,9 @@ public class SchoolController {
             return schoolService.getAll(info);
         }else if(school != null) {
             return schoolService.getSchools();
-        }else if(parentId !=null){
+        }else if(schoolCode !=null){
+            return schoolService.getAcademiesByCode(schoolCode);
+        }else if(parentId != null){
             return schoolService.getAcademies(parentId);
         }else{//获取树 含children的列表
                 info = 0;

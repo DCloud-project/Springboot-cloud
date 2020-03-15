@@ -17,5 +17,6 @@ public interface SchoolService extends IService<School> {
     String getChildList(Integer page,Integer id,Integer info);
     String getAll(Integer info);
     String getAcademies(Integer parentId);
+    String getAcademiesByCode(String schoolCode);
     String getSchools();
 }

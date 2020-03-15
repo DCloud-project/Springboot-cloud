@@ -76,9 +76,21 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper, School> impleme
 
     @Override
     public String getAcademies(Integer parentId) {
-        QueryWrapper queryWrapper = new QueryWrapper();
+        QueryWrapper<School> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("is_delete",0);
         queryWrapper.eq("parent_id",parentId);
+        return JSON.toJSONString(schoolMapper.selectList(queryWrapper));
+    }
+
+    @Override
+    public String getAcademiesByCode(String schoolCode) {
+        //通过父级code找到父级Id
+        QueryWrapper<School> parentQuery = new QueryWrapper();
+        parentQuery.eq("code",schoolCode);
+        School school = schoolMapper.selectOne(parentQuery);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("is_delete",0);
+        queryWrapper.eq("parent_id",school.getId());
         return JSON.toJSONString(schoolMapper.selectList(queryWrapper));
     }
 
