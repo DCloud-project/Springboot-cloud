@@ -1,12 +1,30 @@
+//package com.example.dcloud.mapper;
+//
+//import com.example.dcloud.entity.User;
+//import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+//
+///**
+// * <p>
+// *  Mapper 接口
+// * </p>
+// *
+// * @author fifteen
+// * @since 2020-04-01
+// */
+//public interface UserMapper extends BaseMapper<User> {
+//
+//}
 package com.example.dcloud.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.dcloud.entity.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface UserDao {
+public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT email FROM user WHERE email = #{email}")
     String checkEmail(String account);  //查询账号
     @Insert("INSERT INTO user (name,nickname,image,sno,sex,telphone,email,password,birth,roleId,exp,state,schoolId," +
