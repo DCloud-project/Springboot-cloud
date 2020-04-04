@@ -8,11 +8,12 @@
         <result column="code" property="code" />
         <result column="name" property="name" />
         <result column="is_delete" property="isDelete" />
+        <result column="description" property="description" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, name, is_delete
+        id, code, name, is_delete, description
     </sql>
 
 </mapper>

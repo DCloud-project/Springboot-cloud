@@ -1,7 +1,7 @@
 package com.example.dcloud.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -14,7 +14,6 @@ import java.io.Serializable;
  * @author fifteen
  * @since 2020-04-01
  */
-@TableName(value = "dictionary")
 public class Dictionary extends Model<Dictionary> {
 
 private static final long serialVersionUID=1L;
@@ -23,22 +22,25 @@ private static final long serialVersionUID=1L;
     private Long id;
 
     /**
-     * 字典编码
+     * 英文标识
      */
+    @TableField(value = "code")
     private String code;
 
     /**
-     * 字典名称
+     * 中文标识
      */
+    @TableField(value = "name")
     private String name;
 
+    @TableField(value = "is_delete")
     private Integer isDelete;
 
-    public Dictionary(){
-        this.code = "0";
-        this.name = "0";
-        this.isDelete = 0;
-    }
+    /**
+     * 说明
+     */
+    private String description;
+
 
     public Long getId() {
         return id;
@@ -72,6 +74,14 @@ private static final long serialVersionUID=1L;
         this.isDelete = isDelete;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -84,6 +94,7 @@ private static final long serialVersionUID=1L;
         ", code=" + code +
         ", name=" + name +
         ", isDelete=" + isDelete +
+        ", description=" + description +
         "}";
     }
 }

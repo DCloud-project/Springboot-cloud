@@ -1,7 +1,6 @@
 package com.example.dcloud.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -14,7 +13,6 @@ import java.io.Serializable;
  * @author fifteen
  * @since 2020-04-01
  */
-@TableName(value = "dictionary_detail")
 public class DictionaryDetail extends Model<DictionaryDetail> {
 
 private static final long serialVersionUID=1L;
@@ -28,34 +26,35 @@ private static final long serialVersionUID=1L;
     private String code;
 
     /**
-     * 类型code
+     * 类型编码
      */
     private String typeCode;
 
     /**
-     * 字典名称
+     * 数据项名称
      */
     private String name;
 
     /**
-     * 字典值
+     * 数据项值
      */
     private String value;
 
     /**
-     * 0--不是默认值；1--默认值
+     * 是否是默认值
      */
     private Integer isDefault;
 
+    private Integer dictOrder;
+
     private Integer isDelete;
 
-    public DictionaryDetail(){
-        this.code = "0";
-        this.isDefault = 1;
-        this.isDelete = 0;
-        this.name = "0";
-        this.typeCode = "0";
-        this.value = "0";
+    public Integer getDictOrder() {
+        return dictOrder;
+    }
+
+    public void setDictOrder(Integer dictOrder) {
+        this.dictOrder = dictOrder;
     }
 
     public Long getId() {
@@ -122,13 +121,14 @@ private static final long serialVersionUID=1L;
     @Override
     public String toString() {
         return "DictionaryDetail{" +
-        "id=" + id +
-        ", code=" + code +
-        ", typeCode=" + typeCode +
-        ", name=" + name +
-        ", value=" + value +
-        ", isDefault=" + isDefault +
-        ", isDelete=" + isDelete +
-        "}";
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", typeCode='" + typeCode + '\'' +
+                ", name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                ", isDefault=" + isDefault +
+                ", dictOrder=" + dictOrder +
+                ", isDelete=" + isDelete +
+                '}';
     }
 }

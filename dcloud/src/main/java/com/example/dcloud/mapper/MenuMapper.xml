@@ -21,5 +21,8 @@
     <sql id="Base_Column_List">
         id, parent_id, name, menu_order, icon, url, type, is_menu, is_visible, is_page, is_deleted
     </sql>
+    <select id="getMenuTree" resultMap="BaseResultMap">
+        SELECT * from menu m
+    </select>
 
 </mapper>

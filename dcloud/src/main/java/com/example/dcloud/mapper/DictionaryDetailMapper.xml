@@ -10,6 +10,7 @@
         <result column="name" property="name" />
         <result column="value" property="value" />
         <result column="is_default" property="isDefault" />
+        <result column="dict_order" property="dictOrder" />
         <result column="is_delete" property="isDelete" />
     </resultMap>
 
