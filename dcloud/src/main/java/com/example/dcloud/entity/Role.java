@@ -43,6 +43,14 @@ private static final long serialVersionUID=1L;
 
     private Integer isDelete;
 
+    public Role(){
+        this.description = "0";
+        this.isDelete = 0;
+        this.isStudent = 1;
+        this.name = "0";
+        this.state = 0;
+        this.powerId = "0";
+    }
 
     public Integer getId() {
         return id;

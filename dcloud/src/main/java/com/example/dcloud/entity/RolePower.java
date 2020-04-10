@@ -28,6 +28,11 @@ private static final long serialVersionUID=1L;
 
     private Integer isDelete;
 
+    public RolePower(){
+        this.isDelete = 0;
+        this.powerId = Long.valueOf(0);
+        this.roleId = Long.valueOf(0);
+    }
 
     public Long getId() {
         return id;

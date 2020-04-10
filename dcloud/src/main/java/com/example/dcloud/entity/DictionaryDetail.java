@@ -49,6 +49,14 @@ private static final long serialVersionUID=1L;
 
     private Integer isDelete;
 
+    public DictionaryDetail(){
+        this.code = "0";
+        this.isDefault = 1;
+        this.isDelete = 0;
+        this.name = "0";
+        this.typeCode = "0";
+        this.value = "0";
+    }
 
     public Long getId() {
         return id;

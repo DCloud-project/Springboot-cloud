@@ -54,6 +54,17 @@ private static final long serialVersionUID=1L;
 
     private Integer isDeleted;
 
+    public Menu(){
+        this.icon = "0";
+        this.isDeleted = 0;
+        this.isMenu = 0;
+        this.isPage = 0;
+        this.isVisible = 0;
+        this.type = 1;
+        this.parentId = Long.valueOf(0);
+        this.menuOrder = 0;
+        this.name = "0";
+    }
 
     public Long getId() {
         return id;

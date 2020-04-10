@@ -37,6 +37,11 @@ private static final long serialVersionUID=1L;
 
     private Integer isDelete;
 
+    public Power(){
+        this.name = "0";
+        this.parentId = 0;
+        this.isDelete = 0;
+    }
 
     public Integer getId() {
         return id;
