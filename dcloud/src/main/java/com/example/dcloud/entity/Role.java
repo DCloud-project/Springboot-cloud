@@ -1,7 +1,6 @@
 package com.example.dcloud.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -12,9 +11,8 @@ import java.io.Serializable;
  * </p>
  *
  * @author fifteen
- * @since 2020-04-02
+ * @since 2020-04-12
  */
-@TableName(value = "role")
 public class Role extends Model<Role> {
 
 private static final long serialVersionUID=1L;
@@ -43,14 +41,6 @@ private static final long serialVersionUID=1L;
 
     private Integer isDelete;
 
-    public Role(){
-        this.description = "0";
-        this.isDelete = 0;
-        this.isStudent = 1;
-        this.name = "0";
-        this.state = 0;
-        this.powerId = "0";
-    }
 
     public Integer getId() {
         return id;

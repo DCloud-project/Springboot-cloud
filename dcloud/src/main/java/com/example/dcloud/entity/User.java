@@ -101,7 +101,7 @@ private static final long serialVersionUID=1L;
     private Integer education;
 
     /**
-     * 0-鏈垹闄わ紱1-鍒犻櫎
+     * 0-未删除1-已删除
      */
     private Integer isDelete;
 
