@@ -37,7 +37,7 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT role_id FROM user WHERE email = #{email}")
     int selRole(String account);  //查询角色
 
-    @Select("SELECT name,sex,email,role_id,state,school_id FROM user WHERE isDelete = 0 AND role_id != 2 LIMIT #{offset},10")
+    @Select("SELECT name,sex,email,role_id,state,school_id FROM user WHERE is_delete = 0 AND role_id != 2 LIMIT #{offset},10")
     List<Map>selUser(int offset);  //查询用户列表
 
     @Insert("INSERT INTO user (name,nickname,image,sno,sex,telphone,email,password,birth,role_id,exp,state,school_id," +
