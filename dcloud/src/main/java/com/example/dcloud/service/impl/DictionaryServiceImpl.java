@@ -50,17 +50,17 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
     }
 
     @Override
-    public String pageListforQuery(Map map) {
+    public String pageListforQuery(String code,String name,Integer page) {
         QueryWrapper<Dictionary> queryWrapper = new QueryWrapper<>();
 //        queryWrapper
 //                .eq("name", map.get("name").toString()).ne("is_delete", 1)
 //                .or(i -> i.eq("code", map.get("code").toString()).ne("is_delete", 1));
         queryWrapper.eq("is_delete",0);
         queryWrapper
-                .like("code",map.get("code").toString())
-                .like("name",map.get("name").toString());
-        Page<Dictionary> page = new Page<>(parseInt(map.get("page").toString()),10);  // 查询第1页，每页返回10条
-        IPage<Dictionary> iPage = dictionaryMapper.selectPage(page,queryWrapper);
+                .like("code",code)
+                .like("name",name);
+        Page<Dictionary> page1 = new Page<>(page,10);  // 查询第1页，每页返回10条
+        IPage<Dictionary> iPage = dictionaryMapper.selectPage(page1,queryWrapper);
         return JSON.toJSONString(iPage);
     }
 

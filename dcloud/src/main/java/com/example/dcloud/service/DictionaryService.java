@@ -18,5 +18,5 @@ public interface DictionaryService extends IService<Dictionary> {
     int selectDictNum();
     List<Map> selectDictionary(int offset);
     String pageList(Integer cur_page);
-    String pageListforQuery(Map map);
+    String pageListforQuery(String code,String name,Integer page);
 }
