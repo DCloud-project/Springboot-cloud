@@ -1,9 +1,17 @@
 package com.example.dcloud.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.dcloud.entity.Role;
+import com.example.dcloud.service.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,8 +22,16 @@ import org.springframework.stereotype.Controller;
  * @since 2020-04-12
  */
 @Controller
-@RequestMapping("/role")
+@RestController
 public class RoleController {
+    @Autowired
+    RoleService roleService;
 
+    @PostMapping(value = "/roleList")
+    public List<Role> roleList(@RequestBody JSONObject jsonObject) {
+       QueryWrapper<Role> wrapper = new QueryWrapper<>();
+
+       return roleService.list();
+    }
 }
 

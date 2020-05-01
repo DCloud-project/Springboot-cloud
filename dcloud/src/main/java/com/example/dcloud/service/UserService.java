@@ -1,8 +1,8 @@
 package com.example.dcloud.service;
 
-import com.example.dcloud.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.dcloud.entity.User;
+
 import java.util.List;
 import java.util.Map;
 /**
@@ -26,4 +26,5 @@ public interface UserService extends IService<User> {
     List<Map> searchUser(int state,String name,int offset);
     int searchUserNum(int state,String name,int offset);
     void changeUserStateService(String email);
+    String userList(String state,String name,Integer page);
 }

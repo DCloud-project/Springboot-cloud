@@ -105,24 +105,6 @@ private static final long serialVersionUID=1L;
      */
     private Integer isDelete;
 
-    public User(){
-        this.birth = "0";
-        this.education = 0;
-        this.email = "0";
-        this.exp = 0;
-        this.image = "0";
-        this.isDelete =0;
-        this.name = "0";
-        this.nickname = "0";
-        this.password = "0";
-        this.powerId = "0";
-        this.roleId = 0;
-        this.schoolId = 0;
-        this.state = 0;
-        this.telphone = "0";
-        this.sex = 0;
-    }
-
     public Integer getId() {
         return id;
     }
