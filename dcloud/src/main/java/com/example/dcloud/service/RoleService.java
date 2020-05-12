@@ -12,5 +12,5 @@ import com.example.dcloud.entity.Role;
  * @since 2020-04-12
  */
 public interface RoleService extends IService<Role> {
-
+    String roleList(String state,String name,Integer page);
 }
