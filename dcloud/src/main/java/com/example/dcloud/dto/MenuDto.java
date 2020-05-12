@@ -1,28 +1,11 @@
-package com.example.dcloud.entity;
+package com.example.dcloud.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
-
-/**
- * <p>
- * 
- * </p>
- *
- * @author fifteen
- * @since 2020-04-01
- */
-@TableName(value = "menu")
-public class Menu extends Model<Menu> {
-
-private static final long serialVersionUID=1L;
-
-    @TableId(value = "id", type = IdType.AUTO)
+public class MenuDto {
     private Long id;
 
     private Long parentId;
+
+    private String parentName;
 
     private String name;
 
@@ -41,11 +24,6 @@ private static final long serialVersionUID=1L;
      */
     private String url;
 
-    /**
-     * 类型(1:菜单2:按钮)
-     */
-    private Integer type;
-
     private Integer isMenu;
 
     private Integer isVisible;
@@ -53,6 +31,21 @@ private static final long serialVersionUID=1L;
     private Integer isPage;
 
     private Integer isDeleted;
+
+    public MenuDto() {
+        this.setIsDeleted(0);
+        this.setIsMenu(1);
+        this.setIsPage(1);
+        this.setIsVisible(1);
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
 
     public Long getId() {
         return id;
@@ -102,14 +95,6 @@ private static final long serialVersionUID=1L;
         this.url = url;
     }
 
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
     public Integer getIsMenu() {
         return isMenu;
     }
@@ -140,27 +125,5 @@ private static final long serialVersionUID=1L;
 
     public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
-    }
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
-    @Override
-    public String toString() {
-        return "Menu{" +
-        "id=" + id +
-        ", parentId=" + parentId +
-        ", name=" + name +
-        ", menuOrder=" + menuOrder +
-        ", icon=" + icon +
-        ", url=" + url +
-        ", type=" + type +
-        ", isMenu=" + isMenu +
-        ", isVisible=" + isVisible +
-        ", isPage=" + isPage +
-        ", isDeleted=" + isDeleted +
-        "}";
     }
 }
