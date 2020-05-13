@@ -39,7 +39,7 @@ public class DictionaryController {
     @Autowired
     private DictionaryDetailService dictionaryDetailService;
     /**
-     * 返回数据字典列表
+     * 返回数据字典列表,查询，详情
      * @param page
      * @return
      */
@@ -50,8 +50,6 @@ public class DictionaryController {
             @RequestParam(value="code",required = false)String code,
             @RequestParam(value="name",required = false)String name
     ) {
-
-//        Map map = JSON.toJavaObject(jsonObject, Map.class);
         //有code-->详情
         if(code!=null){
             if(name!=null){//有name--->查询
@@ -62,26 +60,14 @@ public class DictionaryController {
         }else{//获取列表
             return dictionaryService.pageList(page);
         }
-
     }
-    /**
-     * 查询
-     * @param jsonObject（page,code,name）
-     * @return
-     */
-//    @ResponseBody
-//    @RequestMapping(value = "/queryList",method = RequestMethod.POST)
-//    public String queryList(@RequestBody JSONObject jsonObject) {
-//        Map map = JSON.toJavaObject(jsonObject, Map.class);
-//        return dictionaryService.pageListforQuery(map);
-//    }
+
     /**
      * 编辑
-     * @param
+     * @param jsonObject
      * @return
      */
     @ResponseBody
-//    @RequestMapping(value="/update",method = RequestMethod.GET)
     @RequestMapping(method = RequestMethod.PATCH)
     public String update(@RequestBody JSONObject jsonObject) {
         Map map = JSON.toJavaObject(jsonObject, Map.class);
@@ -263,17 +249,13 @@ public class DictionaryController {
         list.remove(0);
         for(int i = 0; i < list.size(); i++){
             String code = list.get(i).toString();
-//            Map<String,Object> dictmap = new HashMap<>();
-//            dictmap.put("code",code);
             QueryWrapper dictWrapper = new QueryWrapper();
             dictWrapper.eq("code",code);
             Dictionary dictionary = new Dictionary();
             dictionary.setIsDelete(1);
             dictionaryService.update(dictionary,dictWrapper);
-//            boolean flag = dictionaryService.removeByMap(dictmap);
+
             //继续删除数据项
-//            Map<String,Object> detailMap = new HashMap<>();
-//            detailMap.put("type_code",code);
             QueryWrapper detailWrapper = new QueryWrapper();
             detailWrapper.eq("type_code",code);
             DictionaryDetail dictionaryDetail = new DictionaryDetail();
