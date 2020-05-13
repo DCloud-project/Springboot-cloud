@@ -12,7 +12,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-05-11
  */
 public interface SchoolService extends IService<School> {
-    String queryList(Integer page,String school_name,String academy_name);
+    String queryList(Integer page,String name);
+    String queryListforAll(Integer page);
     String getChildList(Integer page,Integer id);
     String getAll();
 }

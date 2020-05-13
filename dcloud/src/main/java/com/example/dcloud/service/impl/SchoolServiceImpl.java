@@ -33,11 +33,20 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper, School> impleme
     private SchoolMapper schoolMapper;
 
     @Override
-    public String queryList(Integer page, String school_name, String academy_name) {
+    public String queryList(Integer page, String name) {
         QueryWrapper<School> queryWrapper =  new QueryWrapper<>();
-        queryWrapper.lambda().eq(School::getIsDelete, 0).and(
-                queryWrapper1 -> queryWrapper1.like(School::getName,school_name)
-                        .or().like(School::getName,academy_name));
+            queryWrapper.lambda().eq(School::getIsDelete, 0).and(
+                    queryWrapper1 -> queryWrapper1.like(School::getName,name)
+                            .or().like(School::getName,name));
+        Page<School> page1 = new Page<>(page,10);  // 查询第page页，每页返回10条
+        IPage<School> iPage = schoolMapper.selectPage(page1,queryWrapper);
+        return JSON.toJSONString(iPage);
+    }
+
+    @Override
+    public String queryListforAll(Integer page) {
+        QueryWrapper<School> queryWrapper =  new QueryWrapper<>();
+        queryWrapper.eq("is_delete", 0);
         Page<School> page1 = new Page<>(page,10);  // 查询第page页，每页返回10条
         IPage<School> iPage = schoolMapper.selectPage(page1,queryWrapper);
         return JSON.toJSONString(iPage);
