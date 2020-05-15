@@ -2,7 +2,10 @@ package com.example.dcloud.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.dcloud.entity.User;
 import com.example.dcloud.service.UserService;
+import com.example.dcloud.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -100,4 +103,51 @@ public class UserController {
         jsonObject1.put("respCode","1");
         return jsonObject1.toString();
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/updatePassword",method = RequestMethod.POST)
+    public String updatePassword(@RequestBody JSONObject jsonObject) {
+        Map map = JSON.toJavaObject(jsonObject, Map.class);
+        String email = map.get("email").toString();
+        String newPassword = map.get("newpassword1").toString();
+        String repeatNewPassword = map.get("newpassword2").toString();
+        String oldPassword = map.get("oldpassword").toString();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email",email);
+        User user = userService.getOne(queryWrapper);
+        String password = user.getPassword();
+        int id = user.getId();
+        if(oldPassword.equals(password)){
+            if(newPassword.equals(repeatNewPassword)){
+                User user1 = new User();
+                user1.setId(id);
+                user1.setPassword(newPassword);
+                userService.updateById(user1);
+                return ResultUtil.success();
+            }
+            else{
+                return ResultUtil.error("两次输入的密码不一致");
+            }
+        }
+        else{
+            return ResultUtil.error("原密码错误");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/resetPassword",method = RequestMethod.PUT)
+    public String resetPassword(@RequestParam(value="email",required = false)String email) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email",email);
+        User user = new User();
+        user.setPassword("123456");
+        try{
+            userService.update(user,queryWrapper);
+            return ResultUtil.success();
+        } catch (Exception e){
+            return ResultUtil.error("重置失败");
+        }
+    }
+
+
 }

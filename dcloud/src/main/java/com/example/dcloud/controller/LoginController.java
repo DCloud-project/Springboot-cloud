@@ -2,7 +2,6 @@ package com.example.dcloud.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.example.dcloud.entity.Role;
 import com.example.dcloud.service.RoleService;
 import com.example.dcloud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +31,7 @@ public class LoginController {
         if(userService.loginByPwd(email,password)==2){
             jsonObject1.put("respCode","1");
             int role_id = userService.selectRole(email);
-            Role role = roleService.getById(role_id);
-            String power_id = role.getPowerId();
-            String[] power = power_id.split(",");
             jsonObject1.put("role",role_id);
-            jsonObject1.put("power",power);
             return jsonObject1.toString();
         }
         else{
@@ -55,11 +50,7 @@ public class LoginController {
         if(userService.loginByCode(email)==1){
             jsonObject1.put("respCode","1");
             int role_id = userService.selectRole(email);
-            Role role = roleService.getById(role_id);
-            String power_id = role.getPowerId();
-            String[] power = power_id.split(",");
             jsonObject1.put("role",role_id);
-            jsonObject1.put("power",power);
             return jsonObject1.toString();
         }
         else{
