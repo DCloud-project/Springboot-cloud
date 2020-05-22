@@ -12,6 +12,7 @@ public class MailService {
     private String from;
     @Autowired
     private JavaMailSender mailSender;
+
     public void sendMail(String to,String title,String content){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
