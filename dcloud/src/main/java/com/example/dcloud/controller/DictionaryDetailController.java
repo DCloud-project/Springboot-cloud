@@ -2,19 +2,10 @@ package com.example.dcloud.controller;
 
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.example.dcloud.entity.Dictionary;
-import com.example.dcloud.entity.DictionaryDetail;
-import com.example.dcloud.entity.Result;
 import com.example.dcloud.service.DictionaryDetailService;
 import com.example.dcloud.service.DictionaryService;
-import com.example.dcloud.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.Lifecycle;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;

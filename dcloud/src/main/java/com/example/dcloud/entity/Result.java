@@ -1,24 +1,63 @@
 package com.example.dcloud.entity;
 
+import com.alibaba.fastjson.JSONObject;
+import com.example.dcloud.config.ResultCode;
+
 public class Result<T> {
-    private Integer code;//1成功，0失败
-    private String msg;//返回提示
-    private T data;//返回数据
+    //操作代码
+    int respCode;
 
-    public Integer getCode() {
-        return code;
+    //提示信息
+    String message;
+
+    //结果数据
+    T data;
+
+    public Result(ResultCode resultCode){
+        this.respCode = resultCode.getRespCode();
+        this.message = resultCode.getMessage();
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public Result(ResultCode resultCode, T data){
+        this.respCode = resultCode.getRespCode();
+        this.message = resultCode.getMessage();
+        this.data = data;
     }
 
-    public String getMsg() {
-        return msg;
+    public Result(String message){
+        this.message = message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public static Result SUCCESS(){
+        return new Result(ResultCode.SUCCESS);
+    }
+
+    public static <T> Result SUCCESS(T data){
+        return new Result(ResultCode.SUCCESS, data);
+    }
+
+    public static Result FAIL(){
+        return new Result(ResultCode.FAIL);
+    }
+
+    public static Result FAIL(String message){
+        return new Result(message);
+    }
+
+    public int getCode() {
+        return respCode;
+    }
+
+    public void setCode(int respCode) {
+        this.respCode = respCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public T getData() {
@@ -27,5 +66,10 @@ public class Result<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }

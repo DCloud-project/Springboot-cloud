@@ -29,22 +29,6 @@ public class UserController {
             @RequestParam(value="name",required = false)String name
     ){
         return userService.userList(state,name,page);
-//        int length = list.size();
-//        JSONArray jsonArray = new JSONArray();
-//        JSONObject jsonObject2 = new JSONObject();
-//        jsonObject2.put("totalCount",totalCount);
-//        jsonArray.add(jsonObject2);
-//        for(int i = 0;i<length;i++){
-//            JSONObject jsonObject1 = new JSONObject();
-//            jsonObject1.put("name",list.get(i).get("name"));
-//            jsonObject1.put("sex",list.get(i).get("sex"));
-//            jsonObject1.put("email",list.get(i).get("email"));
-//            jsonObject1.put("roleId",list.get(i).get("roleId"));
-//            jsonObject1.put("state",list.get(i).get("state"));
-//            jsonObject1.put("schoolName",list.get(i).get("schoolId"));
-//            jsonArray.add(jsonObject1);
-//        }
-//        return jsonArray.toString();
     }
 
     @ResponseBody
@@ -149,5 +133,70 @@ public class UserController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/info",method = RequestMethod.GET)
+    public String getInfo(@RequestParam(value="email",required = false)String email) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email",email);
+        try{
+            User user = userService.getOne(queryWrapper);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("nickname",user.getNickname());
+            jsonObject.put("sno",user.getSno());
+            jsonObject.put("birth",user.getBirth());
+            jsonObject.put("sex",user.getSex());
+            jsonObject.put("school",user.getSchoolId());
+            jsonObject.put("role",user.getRoleId());
+            jsonObject.put("name",user.getName());
+            jsonObject.put("telphone",user.getTelphone());
+            jsonObject.put("exp",user.getExp());
+            jsonObject.put("image",user.getImage());
+            return jsonObject.toString();
+        } catch (Exception e){
+            return ResultUtil.error("获取失败");
+        }
+    }
 
+    @ResponseBody
+    @RequestMapping(value = "/info",method = RequestMethod.PUT)
+    public String updateInfo(@RequestBody JSONObject jsonObject) {
+        Map map = JSON.toJavaObject(jsonObject,Map.class);
+        User user = new User();
+        String nickname = map.get("nickname").toString();
+        String name = map.get("name").toString();
+        String sno = map.get("sno").toString();
+        if(!map.get("sex").toString().equals("")){
+            int sex = Integer.parseInt(map.get("sex").toString());
+            user.setSex(sex);
+        }
+        String email = map.get("email").toString();
+        if(!map.get("school").toString().equals(""))
+        {
+            int school = Integer.parseInt(map.get("school").toString());
+            user.setSchoolId(school);
+        }
+        String telphone = map.get("telphone").toString();
+        String birth = map.get("birth").toString();
+        String image = map.get("image").toString();
+        if(!sno.equals(""))
+            user.setSno(sno);
+        if(!name.equals(""))
+            user.setName(name);
+        if(!nickname.equals(""))
+            user.setNickname(nickname);
+        if(!telphone.equals(""))
+            user.setTelphone(telphone);
+        if(!birth.equals(""))
+            user.setBirth(birth);
+        if(!image.equals(""))
+            user.setImage(image);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email",email);
+        try{
+            userService.update(user,queryWrapper);
+            return ResultUtil.success();
+        } catch (Exception e){
+            return ResultUtil.error("更新失败");
+        }
+    }
 }

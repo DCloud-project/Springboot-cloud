@@ -5,15 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.dcloud.entity.Dictionary;
-import com.example.dcloud.entity.Result;
 import com.example.dcloud.mapper.DictionaryMapper;
 import com.example.dcloud.service.DictionaryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.dcloud.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

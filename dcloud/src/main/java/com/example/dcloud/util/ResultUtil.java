@@ -1,7 +1,6 @@
 package com.example.dcloud.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.dcloud.entity.Result;
 
 public class ResultUtil {
     public static String success(){
