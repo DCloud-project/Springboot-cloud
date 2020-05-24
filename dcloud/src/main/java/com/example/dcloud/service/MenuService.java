@@ -20,4 +20,5 @@ import java.util.Map;
 public interface MenuService extends IService<Menu> {
     String pageList(int cur_page);
     String queryList(String name,Integer page,Integer is_visible);
+    String getAll();
 }

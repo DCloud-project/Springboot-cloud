@@ -15,6 +15,7 @@
         <result column="is_visible" property="isVisible" />
         <result column="is_page" property="isPage" />
         <result column="is_deleted" property="isDeleted" />
+        <result column="menu_level" property="menuLevel" />
     </resultMap>
 
     <!-- 通用查询结果列 -->

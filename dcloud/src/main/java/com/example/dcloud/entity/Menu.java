@@ -30,6 +30,10 @@ private static final long serialVersionUID=1L;
      * 排序
      */
     private Integer menuOrder;
+    /**
+     * 层级
+     */
+    private Integer menuLevel;
 
     /**
      * 图标
@@ -53,6 +57,14 @@ private static final long serialVersionUID=1L;
     private Integer isPage;
 
     private Integer isDeleted;
+
+    public Integer getMenuLevel() {
+        return menuLevel;
+    }
+
+    public void setMenuLevel(Integer menuLevel) {
+        this.menuLevel = menuLevel;
+    }
 
     public Long getId() {
         return id;
