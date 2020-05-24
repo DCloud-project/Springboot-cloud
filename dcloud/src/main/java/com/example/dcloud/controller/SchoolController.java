@@ -27,6 +27,7 @@ import static java.lang.Integer.parseInt;
  * @author fifteen
  * @since 2020-05-11
  */
+@CrossOrigin
 @Controller
 @RequestMapping("/schools")
 public class SchoolController {
@@ -108,22 +109,42 @@ public class SchoolController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/getCode",method = RequestMethod.GET)
+    public String getCode(@RequestParam(value="code",required = false)String code){
+            QueryWrapper queryWrapper = new QueryWrapper();
+            queryWrapper.eq("code",code);
+            School school1 = schoolService.getOne(queryWrapper);
+            System.out.println("sssssss"+school1.getName());
+            return school1.getName();
+    }
     //查询（学校，学院）
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
     public String getlist(
             @RequestParam(value="page",required = false)Integer page,
             @RequestParam(value="name",required = false)String name,
-            @RequestParam(value="id",required = false)Integer id
+            @RequestParam(value="id",required = false)Integer id,
+            @RequestParam(value="info",required = false)Integer info,
+            @RequestParam(value="school",required = false)Integer school,
+            @RequestParam(value="academy",required = false)Integer parentId
     ){
         if(id != null){//获取右侧展开列表
-            return schoolService.getChildList(page,id);
+            info = 0;
+            return schoolService.getChildList(page,id,info);
         }else if(name != null){//查询
             return schoolService.queryList(page,name);
         }else if(page != null){//右侧所有列表
             return schoolService.queryListforAll(page);
+        }else if(info != null) {
+            return schoolService.getAll(info);
+        }else if(school != null) {
+            return schoolService.getSchools();
+        }else if(parentId !=null){
+            return schoolService.getAcademies(parentId);
         }else{//获取树 含children的列表
-            return schoolService.getAll();
+                info = 0;
+                return schoolService.getAll(info);
         }
 
     }

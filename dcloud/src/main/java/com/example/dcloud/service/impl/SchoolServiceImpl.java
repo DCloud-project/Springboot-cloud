@@ -53,8 +53,8 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper, School> impleme
     }
 
     @Override
-    public String getChildList(Integer page, Integer id) {
-        List<Map<Object,String>> list = getAllSchool();
+    public String getChildList(Integer page, Integer id,Integer info) {
+        List<Map<Object,String>> list = getAllSchool(info);
         //遍历所有children的id，进行查询
         List<String> ids = getChildrenIds(id.toString());
         QueryWrapper<School> queryWrapper =  new QueryWrapper<>();
@@ -69,9 +69,25 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper, School> impleme
     }
 
     @Override
-    public String getAll() {
-        List result = getAllSchool();
+    public String getAll(Integer info) {
+        List result = getAllSchool(info);
         return JSON.toJSONString(result);
+    }
+
+    @Override
+    public String getAcademies(Integer parentId) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("is_delete",0);
+        queryWrapper.eq("parent_id",parentId);
+        return JSON.toJSONString(schoolMapper.selectList(queryWrapper));
+    }
+
+    @Override
+    public String getSchools() {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("is_delete",0);
+        queryWrapper.eq("parent_id",0);
+        return JSON.toJSONString(schoolMapper.selectList(queryWrapper));
     }
 
     public List<String> getChildrenIds(String id){
@@ -113,7 +129,7 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper, School> impleme
         }
         return parentIds;
     }
-    public List<Map<Object,String>> getAllSchool(){
+    public List<Map<Object,String>> getAllSchool(Integer info){
         List tempList = new ArrayList();
         List<Map<Object,String>> retultList = new ArrayList();
         QueryWrapper<School> queryWrapper = new QueryWrapper<>();
@@ -123,7 +139,11 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper, School> impleme
         for (School school : list) {
             Map tempMap = new HashMap();
             tempMap.put("id", school.getId());
-            tempMap.put("code", school.getCode());
+            if(info == 1){
+                tempMap.put("value", school.getCode());
+            }else{
+                tempMap.put("code", school.getCode());
+            }
             tempMap.put("label", school.getName());
             tempMap.put("parent_id",school.getParentId());
             tempList.add(tempMap);
@@ -155,6 +175,9 @@ public class SchoolServiceImpl extends ServiceImpl<SchoolMapper, School> impleme
                 retultList.add(temp);
             }
             temp.remove("parent_id");
+            if(info == 1){
+                temp.remove("id");
+            }
         }
         return retultList;
     }
