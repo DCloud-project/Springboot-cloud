@@ -145,7 +145,7 @@ public class UserController {
             jsonObject.put("sno",user.getSno());
             jsonObject.put("birth",user.getBirth());
             jsonObject.put("sex",user.getSex());
-            jsonObject.put("school",user.getSchoolId());
+            jsonObject.put("school",user.getSchoolCode());
             jsonObject.put("role",user.getRoleId());
             jsonObject.put("name",user.getName());
             jsonObject.put("telphone",user.getTelphone());
@@ -170,14 +170,17 @@ public class UserController {
             user.setSex(sex);
         }
         String email = map.get("email").toString();
-        if(!map.get("school").toString().equals(""))
-        {
-            int school = Integer.parseInt(map.get("school").toString());
-            user.setSchoolId(school);
-        }
+//        if(!map.get("school").toString().equals(""))
+//        {
+//            int school = Integer.parseInt(map.get("school").toString());
+//            user.setSchoolId(school);
+//        }
+        String school = map.get("school").toString();
         String telphone = map.get("telphone").toString();
         String birth = map.get("birth").toString();
         String image = map.get("image").toString();
+        if(!school.equals(""))
+            user.setSchoolCode(school);
         if(!sno.equals(""))
             user.setSno(sno);
         if(!name.equals(""))

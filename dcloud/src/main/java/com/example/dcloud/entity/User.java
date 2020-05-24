@@ -88,7 +88,7 @@ private static final long serialVersionUID=1L;
     /**
      * 瀛︽牎闄㈢郴锛堝閿級锛岃繛鎺chool琛?
      */
-    private Integer schoolId;
+    private String schoolCode;
 
     /**
      * 鏉冮檺锛屼腑闂寸敤/鍒嗗紑锛岃繛鎺ユ潈闄愯〃
@@ -209,12 +209,12 @@ private static final long serialVersionUID=1L;
         this.state = state;
     }
 
-    public Integer getSchoolId() {
-        return schoolId;
+    public String getSchoolCode() {
+        return schoolCode;
     }
 
-    public void setSchoolId(Integer schoolId) {
-        this.schoolId = schoolId;
+    public void setSchoolCode(String schoolCode) {
+        this.schoolCode = schoolCode;
     }
 
     public String getPowerId() {
@@ -262,7 +262,7 @@ private static final long serialVersionUID=1L;
         ", roleId=" + roleId +
         ", exp=" + exp +
         ", state=" + state +
-        ", schoolId=" + schoolId +
+        ", schoolId=" + schoolCode +
         ", powerId=" + powerId +
         ", education=" + education +
         ", isDelete=" + isDelete +

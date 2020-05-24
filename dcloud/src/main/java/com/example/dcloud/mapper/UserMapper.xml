@@ -17,7 +17,7 @@
         <result column="role_id" property="roleId" />
         <result column="exp" property="exp" />
         <result column="state" property="state" />
-        <result column="school_id" property="schoolId" />
+        <result column="school_code" property="schoolCode" />
         <result column="power_id" property="powerId" />
         <result column="education" property="education" />
         <result column="is_delete" property="isDelete" />
@@ -25,7 +25,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, nickname, image, sno, sex, telphone, email, password, birth, role_id, exp, state, school_id, power_id, education, is_delete
+        id, name, nickname, image, sno, sex, telphone, email, password, birth, role_id, exp, state, school_code, power_id, education, is_delete
     </sql>
 
 </mapper>

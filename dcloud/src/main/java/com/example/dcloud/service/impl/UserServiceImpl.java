@@ -135,7 +135,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             jsonObject1.put("email",list.get(i).getEmail());
             jsonObject1.put("roleId",list.get(i).getRoleId());
             jsonObject1.put("state",list.get(i).getState());
-            jsonObject1.put("schoolName",list.get(i).getSchoolId());
+            jsonObject1.put("schoolName",list.get(i).getSchoolCode());
             jsonArray.add(jsonObject1);
         }
 //        return JSON.toJSONString(iPage);
