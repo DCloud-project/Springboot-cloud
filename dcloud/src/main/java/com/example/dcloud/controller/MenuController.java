@@ -39,6 +39,7 @@ public class MenuController {
     public String getList(@RequestParam(value="id",required = false)Integer id,
                           @RequestParam(value="name",required = false)String name,
                           @RequestParam(value="page",required = false)Integer page,
+                          @RequestParam(value="parent",required = false)Integer parent,
                           @RequestParam(value="is_visible",required = false)Integer is_visible){
         if(id!=null){//单条菜单详情
             return JSON.toJSONString(menuService.getById(id));
@@ -46,19 +47,22 @@ public class MenuController {
             return menuService.queryList(name,page,is_visible);
         }else if(page!=null){//列表
             return menuService.pageList(page);
-        }else{//上级菜单选择 显示所有菜单名字
+        }else if(parent != null) {
+            //上级菜单选择 显示所有菜单名字
             Map<String, Object> columnMap = new HashMap<>();
             columnMap.put("is_deleted",0);
             Collection<Map<String,Object>> collection = menuService.listMaps();
-            List<String> parent = new ArrayList<>();
+            List<String> parent1 = new ArrayList<>();
             Iterator<Map<String,Object>> it = collection.iterator();
             while (it.hasNext()) {
                 Map<String,Object> s = it.next();
                 if(s.get("isDeleted").equals(0)){
-                    parent.add(s.get("name").toString());
+                    parent1.add(s.get("name").toString());
                 }
             }
-            return JSON.toJSONString(parent);
+            return JSON.toJSONString(parent1);
+        }else{//侧边菜单栏 含children
+            return menuService.getAll();
         }
     }
 
@@ -85,7 +89,11 @@ public class MenuController {
         QueryWrapper queryWrapper1 = new QueryWrapper();
         queryWrapper1.eq("name",map.get("parent_name").toString());
         Menu menu1 = menuService.getOne(queryWrapper1);
-        menu.setParentId(menu1.getId());
+        if(menu1 == null){
+            menu.setParentId(parseLong("0"));
+        }else{
+            menu.setParentId(menu1.getId());
+        }
         menu.setName(map.get("name").toString());
         menu.setIcon(map.get("icon").toString());
         menu.setIsPage(parseInt(map.get("is_page").toString()));
@@ -93,6 +101,7 @@ public class MenuController {
         menu.setIsVisible(parseInt(map.get("is_visible").toString()));
         menu.setIsMenu(parseInt(map.get("is_menu").toString()));
         menu.setMenuOrder(parseInt(map.get("menu_order").toString()));
+        menu.setMenuLevel(parseInt(map.get("menu_level").toString()));
         menu.setType(1);
         menu.setIsDeleted(0);
         menuService.save(menu);
