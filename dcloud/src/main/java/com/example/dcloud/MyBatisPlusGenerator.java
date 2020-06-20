@@ -1,5 +1,6 @@
 package com.example.dcloud;
 
+import java.sql.SQLException;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -8,8 +9,6 @@ import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-
-import java.sql.SQLException;
 
 /**
  * 自动生成器
@@ -22,7 +21,7 @@ public class MyBatisPlusGenerator {
         GlobalConfig config = new GlobalConfig();
         config.setActiveRecord(true) // 是否支持AR模式
                 .setAuthor("fifteen") // 作者
-                .setOutputDir("D:\\Users\\chenwenju\\Documents\\GitHub\\Springboot-cloud\\dcloud\\src\\main\\java") // 生成路径
+                .setOutputDir("C:\\Users\\Administrator\\Desktop\\lastcode\\Springboot-cloud\\dcloud\\src\\main\\java") // 生成路径
                 .setFileOverride(true)  // 文件覆盖
                 .setIdType(IdType.AUTO) // 主键策略
                 .setServiceName("%sService")  // 设置生成的service接口的名字的首字母是否为I
@@ -44,7 +43,7 @@ public class MyBatisPlusGenerator {
 //                .setDbColumnUnderline(true)  // 指定表名 字段名是否使用下划线
                 .setNaming(NamingStrategy.underline_to_camel) // 数据库表映射到实体的命名策略
                 //.setTablePrefix("tbl_")//表名前缀
-                .setInclude("attendence");  // 生成的表
+                .setInclude("course_manage");  // 生成的表
 
         //4. 包名策略配置
         PackageConfig pkConfig = new PackageConfig();
