@@ -115,8 +115,10 @@ public class AttendenceController {
             //增加该学生在该课程的经验值
             CourseStudent courseStudent =new CourseStudent();
             courseStudent.setId(list.get(i).getId());
+            courseStudent.setExp(list.get(i).getExp()+systemExp);
+            courseStudentService.updateById(courseStudent);
 
-
+            //更新该学生总经验值
             QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
             queryWrapper1.eq("email",list.get(i).getStudentEmail());
             User user = userService.getOne(queryWrapper1);
@@ -172,16 +174,25 @@ public class AttendenceController {
         String type = map.get("type").toString();
         QueryWrapper<AttendenceResult> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("attend_id",attend_id);
+        //获取设定的经验值参数
+        List<SystemManage> list1 = systemManageService.list();
+        int systemExp = list1.get(0).getAttendExp();
         //type为0是放弃签到，不加经验值，为1是结束，加经验值
         if(type.equals("1")){
             List<AttendenceResult> list = attendenceResultService.list(queryWrapper);
+            String code = list.get(0).getCode();
+            QueryWrapper<Course> queryWrapper2 = new QueryWrapper<>();
+            queryWrapper2.eq("code",code);
+            
             for(int i=0;i<list.size();i++ )
             {
                 String email = list.get(i).getStudentEmail();
+
+                //更新总经验值
                 QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
                 queryWrapper1.eq("email",email);
                 User user = userService.getOne(queryWrapper1);
-                int exp = user.getExp()+2;
+                int exp = user.getExp()+systemExp;
                 user.setExp(exp);
                 userService.update(user,queryWrapper1);
             }
