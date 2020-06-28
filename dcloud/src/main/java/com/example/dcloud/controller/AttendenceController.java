@@ -144,7 +144,7 @@ public class AttendenceController {
         for(int i=0;i<list.size();i++){
             String studentEmail = list.get(i).getStudentEmail();
             QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
-            queryWrapper.eq("email",studentEmail);
+            queryWrapper1.eq("email",studentEmail);
             User user = userService.getOne(queryWrapper1);
             name[i] = user.getName();
         }
