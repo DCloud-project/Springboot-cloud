@@ -9,6 +9,7 @@ import com.example.dcloud.annotation.NoToken;
 import com.example.dcloud.entity.User;
 import com.example.dcloud.service.RoleService;
 import com.example.dcloud.service.UserService;
+import com.example.dcloud.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,9 @@ public class LoginController {
             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("email",email);
             User user = userService.getOne(queryWrapper);
+            if(user.getIsDelete()==1){
+                return ResultUtil.error("账号已被删除！");
+            }
             String token = JWT.create().withAudience(user.getId() + "")
                     .sign(Algorithm.HMAC256(user.getPassword()));
             jsonObject1.put("respCode","1");
@@ -64,6 +68,9 @@ public class LoginController {
             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("email",email);
             User user = userService.getOne(queryWrapper);
+            if(user.getIsDelete()==1){
+                return ResultUtil.error("账号已被删除！");
+            }
             String token = JWT.create().withAudience(user.getId() + "")
                     .sign(Algorithm.HMAC256(user.getPassword()));
             jsonObject1.put("respCode","1");
