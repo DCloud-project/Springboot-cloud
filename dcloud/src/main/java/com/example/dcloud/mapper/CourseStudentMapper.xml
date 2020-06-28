@@ -8,6 +8,7 @@
         <result column="course_id" property="courseId" />
         <result column="student_email" property="studentEmail" />
         <result column="teacher_email" property="teacherEmail" />
+        <result column="exp" property="exp" />
         <result column="is_delete" property="isDelete" />
     </resultMap>
 

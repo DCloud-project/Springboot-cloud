@@ -158,7 +158,7 @@ public class CourseController {
             jsonObject.put("name",user.getName());
             jsonObject.put("sno",user.getSno());
             jsonObject.put("sex",user.getSex());
-            jsonObject.put("exp",user.getExp());
+            jsonObject.put("exp",list.get(i).getExp());
             jsonObject.put("email",user.getEmail());
             jsonArray.add(jsonObject);
         }
@@ -190,6 +190,14 @@ public class CourseController {
             Course course = courseService.getOne(queryWrapper);
             if(course!=null){
                 if(map.get("email") != null){
+                    //不能加入自己创建的课程
+                    QueryWrapper<CourseStudent> queryMyCourse = new QueryWrapper();
+                    queryMyCourse.eq("course_id",course.getId())
+                            .eq("teacher_email",map.get("email"));
+                    int count1 = courseStudentService.count(queryMyCourse);
+                    if (count1 > 0) {
+                        return ResultUtil.error("不能加入自己创建的班课！");
+                    }
                     //判断是否已经加入过
                     QueryWrapper<CourseStudent> queryJoined = new QueryWrapper();
                     queryJoined.eq("course_id",course.getId())
@@ -256,9 +264,6 @@ public class CourseController {
                 count = courseService.count(codeQuery);
             }while(count > 0);
             course.setCode(code);
-            //缺生成二维码--------
-
-            //-----------
             course.setLearnRequire(map.get("require").toString());
             course.setExamSchedule(map.get("examination").toString());
             course.setSemester(map.get("term").toString());

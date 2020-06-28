@@ -91,12 +91,15 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     public String searchLesson(String jsonArr, String search) {
         JSONArray searchResult = JSON.parseArray(jsonArr);
         JSONArray searchArray = new JSONArray();
+        int index = 0;
         for(int i = 0 ; i < searchResult.size(); i++){
             JSONObject lesson = JSON.parseObject(searchResult.get(i).toString());
             JSONObject result = new JSONObject();
             if(search!=null && search !="" && (lesson.get("name").toString().contains(search)
                     ||lesson.get("no").toString().contains(search))){
                 result = lesson;
+                result.put("index",index);
+                index++;
                 searchArray.add(result);
             }
         }

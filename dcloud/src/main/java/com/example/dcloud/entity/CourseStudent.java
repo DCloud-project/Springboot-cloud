@@ -26,8 +26,17 @@ private static final long serialVersionUID=1L;
 
     private String teacherEmail;
 
+    private Integer exp;
+
     private int isDelete;
 
+    public Integer getExp() {
+        return exp;
+    }
+
+    public void setExp(Integer exp) {
+        this.exp = exp;
+    }
 
     public int getIsDelete() {
         return isDelete;
