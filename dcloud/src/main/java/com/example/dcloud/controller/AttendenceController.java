@@ -40,6 +40,8 @@ public class AttendenceController {
     private CourseStudentService courseStudentService;
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private SystemManageService systemManageService;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
@@ -95,7 +97,13 @@ public class AttendenceController {
         queryWrapper3.eq("course_id",courseId)
                 .eq("is_delete",0);
         List<CourseStudent> list = courseStudentService.list(queryWrapper3);
+
+        //获取设定的经验值参数
+        List<SystemManage> list1 = systemManageService.list();
+        int systemExp = list1.get(0).getAttendExp();
+
         for(int i=0;i<list.size();i++){
+            //新增签到记录
             AttendenceResult attendenceResult = new AttendenceResult();
             attendenceResult.setAttendTime(sdf.format(d));
             attendenceResult.setCode(code);
@@ -103,10 +111,16 @@ public class AttendenceController {
             attendenceResult.setAttendId(attendId);
             attendenceResult.setIsDelete(0);
             attendenceResultService.save(attendenceResult);
+
+            //增加该学生在该课程的经验值
+            CourseStudent courseStudent =new CourseStudent();
+            courseStudent.setId(list.get(i).getId());
+
+
             QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
             queryWrapper1.eq("email",list.get(i).getStudentEmail());
             User user = userService.getOne(queryWrapper1);
-            int exp = user.getExp()+2;
+            int exp = user.getExp()+systemExp;
             user.setExp(exp);
             userService.update(user,queryWrapper1);
         }

@@ -26,9 +26,10 @@ public class UserController {
     public String userList(
             @RequestParam(value="page",required = false)Integer page,
             @RequestParam(value="state",required = false)String state,
-            @RequestParam(value="name",required = false)String name
+            @RequestParam(value="name",required = false)String name,
+            @RequestParam(value="roleId",required = false)Integer roleId
     ){
-        return userService.userList(state,name,page);
+        return userService.userList(state,name,page,roleId);
     }
 
     @ResponseBody
@@ -101,7 +102,7 @@ public class UserController {
         User user = userService.getOne(queryWrapper);
         String password = user.getPassword();
         int id = user.getId();
-        if(oldPassword.equals(password)){
+        if(oldPassword.equals("")){
             if(newPassword.equals(repeatNewPassword)){
                 User user1 = new User();
                 user1.setId(id);
@@ -113,8 +114,22 @@ public class UserController {
                 return ResultUtil.error("两次输入的密码不一致");
             }
         }
-        else{
-            return ResultUtil.error("原密码错误");
+        else {
+            if(oldPassword.equals(password)){
+                if(newPassword.equals(repeatNewPassword)){
+                    User user1 = new User();
+                    user1.setId(id);
+                    user1.setPassword(newPassword);
+                    userService.updateById(user1);
+                    return ResultUtil.success();
+                }
+                else{
+                    return ResultUtil.error("两次输入的密码不一致");
+                }
+            }
+            else{
+                return ResultUtil.error("原密码错误");
+            }
         }
     }
 

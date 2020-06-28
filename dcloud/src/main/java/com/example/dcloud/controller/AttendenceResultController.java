@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.dcloud.entity.*;
 import com.example.dcloud.service.*;
+import com.example.dcloud.util.DistanceUtil;
 import com.example.dcloud.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,8 @@ public class AttendenceResultController {
     private CourseStudentService courseStudentService;
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private SystemManageService systemManageService;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
@@ -61,7 +64,18 @@ public class AttendenceResultController {
             queryWrapper1.eq("student_email", email)
                     .eq("attend_id", attendId);
             if (attendenceResultService.count(queryWrapper1) != 0)
-                return ResultUtil.error("请勿重复签到");
+                return ResultUtil.error("请勿重复签到！");
+
+            String teacherLocal = attendence.getLocal();
+            Double distance = DistanceUtil.getDistanceMeter(teacherLocal,studentLocal);
+
+            //获取设定的距离参数
+            List<SystemManage> list = systemManageService.list();
+            int systemDistance = list.get(0).getAttendDistance();
+            if(distance>systemDistance){
+                return ResultUtil.error("签到位置过远！");
+            }
+
             Date d = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss ");
             sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));

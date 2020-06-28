@@ -103,10 +103,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userMapper.updUserState(state,email);
     }
 
-    public String userList(String state,String name,Integer page){
+    public String userList(String state,String name,Integer page,Integer roleId){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("is_delete",0);
         queryWrapper.ne("role_id",2);
+        if(roleId==1)
+            queryWrapper.eq("role_id",0);
         if(state!=null && name !=null) {
             queryWrapper
                     .like("state", state)

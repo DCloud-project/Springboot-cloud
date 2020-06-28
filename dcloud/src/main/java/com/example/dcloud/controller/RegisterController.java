@@ -20,6 +20,7 @@ public class RegisterController {
     UserService userService;
 
     @ResponseBody
+    @NoToken
     @RequestMapping(method = RequestMethod.POST)
     public String register(@RequestBody JSONObject jsonObject)
     {

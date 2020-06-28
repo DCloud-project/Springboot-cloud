@@ -26,5 +26,5 @@ public interface UserService extends IService<User> {
     List<Map> searchUser(int state,String name,int offset);
     int searchUserNum(int state,String name,int offset);
     void changeUserStateService(String email);
-    String userList(String state,String name,Integer page);
+    String userList(String state,String name,Integer page,Integer roleId);
 }
