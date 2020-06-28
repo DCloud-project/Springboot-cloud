@@ -113,8 +113,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                     temp.put("roles","common");
                 }else if(temp.get("name").toString().equals("学校管理")) {
                     temp.put("roles","common");
+                }else if(temp.get("name").toString().equals("班课管理")) {
+                    temp.put("roles","common");
+                }else if(temp.get("name").toString().equals("用户管理")) {
+                    temp.put("roles","admin");
                 }else{
-                    temp.put("roles","superAdmin");
+                        temp.put("roles","superAdmin");
                 }
                 retultList.add(temp);
             }
