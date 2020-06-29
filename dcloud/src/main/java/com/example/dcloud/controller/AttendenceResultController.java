@@ -228,6 +228,21 @@ public class AttendenceResultController {
             queryWrapper.eq("student_email",email)
                     .eq("attend_id",attendId);
             int count = attendenceResultService.count(queryWrapper);
+
+            //获取设定的经验值参数
+            List<SystemManage> list1 = systemManageService.list();
+            int systemExp = list1.get(0).getAttendExp();
+
+            QueryWrapper<Course> queryWrapper2 = new QueryWrapper<>();
+            queryWrapper2.eq("code",code);
+            Course course = courseService.getOne(queryWrapper2);
+            long courseId = course.getId();
+            QueryWrapper<CourseStudent> queryWrapper3 = new QueryWrapper<>();
+            queryWrapper3.eq("course_id",courseId)
+                    .eq("email",email);
+            CourseStudent courseStudent = courseStudentService.getOne(queryWrapper3);
+            int exp1 = courseStudent.getExp();
+
             if(count==0){
                 AttendenceResult attendenceResult = new AttendenceResult();
                 attendenceResult.setAttendTime(sdf.format(d));
@@ -237,14 +252,19 @@ public class AttendenceResultController {
                 attendenceResult.setIsDelete(type);
                 attendenceResultService.save(attendenceResult);
 
+                //增加该课程经验值
+                CourseStudent courseStudent1 = new CourseStudent();
+                courseStudent1.setExp(exp1+systemExp);
+                courseStudentService.update(courseStudent1,queryWrapper3);
+
                 QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
                 queryWrapper1.eq("email",email);
                 User user = userService.getOne(queryWrapper1);
                 int exp;
                 if(type==0)
-                    exp = user.getExp()+2;
+                    exp = user.getExp()+systemExp;
                 else
-                    exp = user.getExp()+1;
+                    exp = user.getExp()+systemExp/2;
                 user.setExp(exp);
                 userService.update(user,queryWrapper1);
             }
@@ -256,22 +276,40 @@ public class AttendenceResultController {
                 attendenceResult.setAttendTime(sdf.format(d));
                 attendenceResult.setIsDelete(type);
                 attendenceResultService.update(attendenceResult,queryWrapper);
+
+                int exp2;
+                if(type==2&&flag==0)
+                    exp2 = exp1-systemExp;
+                else if(type==2&&flag==1)
+                    exp2 = exp1-(systemExp/2);
+                else if(type==1&&flag==0)
+                    exp2 = exp1-(systemExp/2);
+                else if(type==1&&flag==2)
+                    exp2 = exp1+(systemExp/2);
+                else if(type==0&&flag==1)
+                    exp2 = exp1+(systemExp/2);
+                else
+                    exp2 = exp1+systemExp;
+                CourseStudent courseStudent1 = new CourseStudent();
+                courseStudent1.setExp(exp2);
+                courseStudentService.update(courseStudent1,queryWrapper3);
+
                 QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
                 queryWrapper1.eq("email",email);
                 User user = userService.getOne(queryWrapper1);
                 int exp;
                 if(type==2&&flag==0)
-                    exp = user.getExp()-2;
+                    exp = user.getExp()-systemExp;
                 else if(type==2&&flag==1)
-                    exp = user.getExp()-1;
+                    exp = user.getExp()-(systemExp/2);
                 else if(type==1&&flag==0)
-                    exp = user.getExp()-1;
+                    exp = user.getExp()-(systemExp/2);
                 else if(type==1&&flag==2)
-                    exp = user.getExp()+1;
+                    exp = user.getExp()+(systemExp/2);
                 else if(type==0&&flag==1)
-                    exp = user.getExp()+1;
+                    exp = user.getExp()+(systemExp/2);
                 else
-                    exp = user.getExp()+2;
+                    exp = user.getExp()+systemExp;
                 user.setExp(exp);
                 userService.update(user,queryWrapper1);
             }
