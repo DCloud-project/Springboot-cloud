@@ -78,7 +78,7 @@ public class AttendenceResultController {
             }
 
             Date d = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss ");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
             sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
             AttendenceResult attendenceResult = new AttendenceResult();
             attendenceResult.setAttendTime(sdf.format(d));
@@ -222,7 +222,7 @@ public class AttendenceResultController {
             String code = list.get(i).get("code").toString();
             int type = Integer.parseInt(list.get(i).get("type").toString());
             Date d = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss ");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
             sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
 
             QueryWrapper<AttendenceResult> queryWrapper = new QueryWrapper<>();

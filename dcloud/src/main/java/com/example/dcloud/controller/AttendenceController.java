@@ -51,7 +51,7 @@ public class AttendenceController {
         attendence.setCode(map.get("code").toString());
         attendence.setLocal(map.get("local").toString());
         Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss ");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
         attendence.setStartTime(sdf.format(d));
         attendence.setIsDelete(0);
@@ -75,7 +75,7 @@ public class AttendenceController {
         attendence.setCode(map.get("code").toString());
         attendence.setLocal("1111");
         Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss ");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
         attendence.setStartTime(sdf.format(d));
         attendence.setIsDelete(0);
