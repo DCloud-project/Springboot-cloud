@@ -43,7 +43,7 @@ public class MyBatisPlusGenerator {
 //                .setDbColumnUnderline(true)  // 指定表名 字段名是否使用下划线
                 .setNaming(NamingStrategy.underline_to_camel) // 数据库表映射到实体的命名策略
                 //.setTablePrefix("tbl_")//表名前缀
-                .setInclude("course_manage");  // 生成的表
+                .setInclude("third_login");  // 生成的表
 
         //4. 包名策略配置
         PackageConfig pkConfig = new PackageConfig();
