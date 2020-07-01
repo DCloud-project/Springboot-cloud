@@ -6,7 +6,9 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import com.example.dcloud.annotation.NoToken;
+import com.example.dcloud.entity.ThirdLogin;
 import com.example.dcloud.entity.User;
+import com.example.dcloud.service.ThirdLoginService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,10 @@ import com.example.dcloud.entity.QQUserInfo;
 @CrossOrigin
 @Controller
 public class QQController {
+//	@Autowired
+//	private ThirdLogin thirdLogin;
+//	@Autowired
+//	private ThirdLoginService thirdLoginService;
 
 	/**
 	 * QQ ：读取Appid相关配置信息静态类
@@ -110,7 +116,18 @@ public class QQController {
 		System.out.println(userInfo.getNickname());//昵称,name
 		System.out.println(userInfo.getGender());//性别
 		System.out.println(userInfo.getYear());//出生年
+		System.out.println(qqProperties);
+		//将第三方信息存入数据库
+//		ThirdLogin third = new ThirdLogin();
+//		third.setOpenName(userInfo.getNickname());
+//		third.setPlatform("qq");
+////		user.setExpireIn(qqProperties.get("expiresIn").toString());
+//		third.setOpenId(qqProperties.get("openId").toString());
+//		third.setAccessToken(qqProperties.get("accessToken").toString());
+//		third.setRefreshToken(qqProperties.get("refreshToken").toString());
+//		thirdLoginService.save(third);
 		//插入一条user数据 要绑定邮箱吗？？？
+
 		return userInfo;
 	}
 

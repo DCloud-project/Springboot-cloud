@@ -112,7 +112,7 @@ public class SchoolController {
     @ResponseBody
     @RequestMapping(value = "/getCode",method = RequestMethod.GET)
     public String getCode(@RequestParam(value="code",required = false)String code){
-        if(code == null){
+        if(code == null || code.equals("0")){
             return "未设置";
         }
         QueryWrapper queryWrapper = new QueryWrapper();
@@ -141,9 +141,9 @@ public class SchoolController {
             return schoolService.queryListforAll(page);
         }else if(info != null) {
             return schoolService.getAll(info);
-        }else if(school != null) {
+        }else if(school != null) {//获取学校列表
             return schoolService.getSchools();
-        }else if(schoolCode !=null){
+        }else if(schoolCode !=null){//获取学院列表
             return schoolService.getAcademiesByCode(schoolCode);
         }else if(parentId != null){
             return schoolService.getAcademies(parentId);

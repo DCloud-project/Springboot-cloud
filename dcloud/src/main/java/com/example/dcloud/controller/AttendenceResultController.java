@@ -51,6 +51,7 @@ public class AttendenceResultController {
         String code = map.get("code").toString();
         String email = map.get("student_email").toString();
         String studentLocal = map.get("local").toString();
+        System.out.println(map);
         QueryWrapper<Attendence> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("code", code)
                 .eq("is_delete", 0);

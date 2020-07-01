@@ -146,7 +146,7 @@ public class AttendenceController {
         for(int i=0;i<list.size();i++){
             String studentEmail = list.get(i).getStudentEmail();
             QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
-            queryWrapper.eq("email",studentEmail);
+            queryWrapper1.eq("email",studentEmail);
             User user = userService.getOne(queryWrapper1);
             name[i] = user.getName();
         }
@@ -179,36 +179,38 @@ public class AttendenceController {
         int systemExp = list1.get(0).getAttendExp();
         //type为0是放弃签到，不加经验值，为1是结束，加经验值
         if(type.equals("1")){
-            List<AttendenceResult> list = attendenceResultService.list(queryWrapper);
-            String code = list.get(0).getCode();
-            QueryWrapper<Course> queryWrapper2 = new QueryWrapper<>();
-            queryWrapper2.eq("code",code);
-            Course course = courseService.getOne(queryWrapper2);
-            long courseId = course.getId();
-            for(int i=0;i<list.size();i++ )
-            {
-                String email = list.get(i).getStudentEmail();
-                QueryWrapper<CourseStudent> queryWrapper3 = new QueryWrapper<>();
-                queryWrapper3.eq("course_id",courseId)
-                        .eq("email",email);
-                CourseStudent courseStudent = courseStudentService.getOne(queryWrapper3);
-                int exp = courseStudent.getExp();
-                CourseStudent courseStudent1 = new CourseStudent();
-                courseStudent1.setExp(exp+systemExp);
-                courseStudentService.update(courseStudent1,queryWrapper3);
-
-                //更新总经验值
-                QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
-                queryWrapper1.eq("email",email);
-                User user = userService.getOne(queryWrapper1);
-                int exp1 = user.getExp()+systemExp;
-                user.setExp(exp1);
-                userService.update(user,queryWrapper1);
-            }
             Attendence attendence = new Attendence();
             attendence.setId(attend_id);
             attendence.setIsDelete(1);
             attendenceService.updateById(attendence);
+            List<AttendenceResult> list = attendenceResultService.list(queryWrapper);
+            if(list.size() != 0){
+                String code = list.get(0).getCode();
+                QueryWrapper<Course> queryWrapper2 = new QueryWrapper<>();
+                queryWrapper2.eq("code",code);
+                Course course = courseService.getOne(queryWrapper2);
+                long courseId = course.getId();
+                for(int i=0;i<list.size();i++ ) {
+                    String email = list.get(i).getStudentEmail();
+                    QueryWrapper<CourseStudent> queryWrapper3 = new QueryWrapper<>();
+                    queryWrapper3.eq("course_id", courseId)
+                            .eq("student_email", email);
+                    CourseStudent courseStudent = courseStudentService.getOne(queryWrapper3);
+                    int exp = courseStudent.getExp();
+                    CourseStudent courseStudent1 = new CourseStudent();
+                    courseStudent1.setExp(exp + systemExp);
+                    courseStudentService.update(courseStudent1, queryWrapper3);
+
+                    //更新总经验值
+                    QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
+                    queryWrapper1.eq("email", email);
+                    User user = userService.getOne(queryWrapper1);
+                    int exp1 = user.getExp() + systemExp;
+                    user.setExp(exp1);
+                    userService.update(user, queryWrapper1);
+                }
+            }
+
         }else{
             Attendence attendence = new Attendence();
             attendence.setId(attend_id);
