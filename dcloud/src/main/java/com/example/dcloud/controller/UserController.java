@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @CrossOrigin
 @Controller
@@ -154,7 +156,7 @@ public class UserController {
                 return ResultUtil.success();
             }
             else{
-                return ResultUtil.error("账号不存在");
+                return ResultUtil.error("账号已被删除");
             }
         }
         else{
@@ -206,39 +208,71 @@ public class UserController {
     public String updateInfo(@RequestBody JSONObject jsonObject) {
         Map map = JSON.toJavaObject(jsonObject,Map.class);
         User user = new User();
-        String nickname = map.get("nickname").toString();
-        String name = map.get("name").toString();
-        String sno = map.get("sno").toString();
-        if(!map.get("sex").toString().equals("")){
-            int sex = Integer.parseInt(map.get("sex").toString());
-            user.setSex(sex);
+        if(map.get("sex")!=null){
+            if(!map.get("sex").toString().equals("")){
+                int sex = Integer.parseInt(map.get("sex").toString());
+                user.setSex(sex);
+            }
         }
         String email = map.get("email").toString();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email",email);
+        User user1 = userService.getOne(queryWrapper);
 //        if(!map.get("school").toString().equals(""))
 //        {
 //            int school = Integer.parseInt(map.get("school").toString());
 //            user.setSchoolId(school);
 //        }
-        String school = map.get("school").toString();
-        String telphone = map.get("telphone").toString();
-        String birth = map.get("birth").toString();
-        String image = map.get("image").toString();
-        if(!school.equals(""))
-            user.setSchoolCode(school);
-        if(!sno.equals(""))
-            user.setSno(sno);
-        if(!name.equals(""))
-            user.setName(name);
-        if(!nickname.equals(""))
-            user.setNickname(nickname);
-        if(!telphone.equals(""))
-            user.setTelphone(telphone);
-        if(!birth.equals(""))
-            user.setBirth(birth);
-        if(!image.equals(""))
-            user.setImage(image);
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("email",email);
+
+        if(map.get("school")!=null)
+            if(!map.get("school").toString().equals(""))
+                user.setSchoolCode(map.get("school").toString());
+        if(map.get("sno")!=null)
+            if(!map.get("sno").toString().equals(""))
+                user.setSno(map.get("sno").toString());
+        if(map.get("name")!=null)
+            if(!map.get("name").toString().equals(""))
+                user.setName(map.get("name").toString());
+        if(map.get("nickname")!=null){
+            if(!map.get("nickname").toString().equals("")){
+                if(!user1.getNickname().equals(map.get("nickname").toString())){
+                    QueryWrapper<User> queryWrapper2 = new QueryWrapper<>();
+                    queryWrapper2.eq("nickname",map.get("nickname").toString());
+                    if(userService.count(queryWrapper2)>0)
+                        return ResultUtil.error("该昵称已被使用");
+                    user.setNickname(map.get("nickname").toString());
+                }
+            }
+
+        }
+
+        if(map.get("telphone")!=null){
+            if(!map.get("telphone").toString().equals("")){
+                if(!user1.getTelphone().equals(map.get("telphone").toString())){
+                    QueryWrapper<User> queryWrapper1 = new QueryWrapper<>();
+                    queryWrapper1.eq("telphone",map.get("telphone").toString());
+                    if(userService.count(queryWrapper1)>0)
+                        return ResultUtil.error("该手机号已被使用");
+
+                    String phoneCheck = "^[1](([3|5|8][\\d])|([4][4,5,6,7,8,9])|([6][2,5,6,7])|([7][^9])|([9][1,8,9]))[\\d]{8}$";
+                    Pattern phoneRegex = Pattern.compile(phoneCheck);
+                    Matcher phoneMatcher = phoneRegex.matcher(map.get("telphone").toString());
+                    boolean phoneIsMatched = phoneMatcher.matches();
+                    if(phoneIsMatched==true)
+                        user.setTelphone(map.get("telphone").toString());
+                    else
+                        return ResultUtil.error("请输入真实手机号");
+                }
+            }
+
+        }
+        if(map.get("birth")!=null)
+            if(!map.get("birth").toString().equals(""))
+                user.setBirth(map.get("birth").toString());
+        if(map.get("image")!=null)
+            if(!map.get("image").toString().equals(""))
+                user.setImage(map.get("image").toString());
+
         try{
             userService.update(user,queryWrapper);
             return ResultUtil.success();

@@ -29,18 +29,39 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return 0;
         }
     }
-    @Override
-    public int loginByPwd(String email,String password){
-        if(userMapper.checkEmail(email)==null){
-            return 0;
-        }
-        else if(userMapper.checkPassword(email).equals(password)==false){
-            return 1;
-        }
-        else{
-            return 2;
-        }
-    }
+//    @Override
+//    public int loginByPwd(String email,String password){
+//        String emailCheck = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+//        Pattern emailRegex = Pattern.compile(emailCheck);
+//        Matcher emailMatcher = emailRegex.matcher(email);
+//        boolean emailIsMatched = emailMatcher.matches();
+//
+//        String phoneCheck = "^[1](([3|5|8][\\\\d])|([4][4,5,6,7,8,9])|([6][2,5,6,7])|([7][^9])|([9][1,8,9]))[\\\\d]{8}$";
+//        Pattern phoneRegex = Pattern.compile(phoneCheck);
+//        Matcher phoneMatcher = phoneRegex.matcher(email);
+//        boolean phoneIsMatched = phoneMatcher.matches();
+//
+//        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("is_delete",0);
+//        if(emailIsMatched==true){
+//            queryWrapper.eq("email",email);
+//        }else if(phoneIsMatched==true){
+//            queryWrapper.eq("telphone",email);
+//        }else{
+//            queryWrapper.eq("nickname",email);
+//        }
+//
+//        if(userMapper.selectCount(queryWrapper)==0){
+//            return 0;
+//        }else{
+//            queryWrapper.eq("password",password);
+//            if(userMapper.selectCount(queryWrapper)==0){
+//                return 1;
+//            }else{
+//                return 2;
+//            }
+//        }
+//    }
     @Override
     public int loginByCode(String email){
         if(userMapper.checkEmail(email)==null){

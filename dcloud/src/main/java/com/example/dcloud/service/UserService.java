@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public interface UserService extends IService<User> {
     int registerService(String email,String password);
-    int loginByPwd(String email,String password);
+//    int loginByPwd(String email,String password);
     int loginByCode(String email);
     int selectRole(String email);
     List<Map> selectUser(int offset);

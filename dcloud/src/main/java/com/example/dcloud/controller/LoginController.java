@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @CrossOrigin
 @RestController
@@ -34,26 +36,50 @@ public class LoginController {
         Map map = JSON.toJavaObject(jsonObject,Map.class);
         String email = (String) map.get("email");
         String password = (String) map.get("password");
-        JSONObject jsonObject1 = new JSONObject();
-        if(userService.loginByPwd(email,password)==2){
-            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        String emailCheck = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        Pattern emailRegex = Pattern.compile(emailCheck);
+        Matcher emailMatcher = emailRegex.matcher(email);
+        boolean emailIsMatched = emailMatcher.matches();
+        System.out.println(emailIsMatched);
+
+        String phoneCheck = "^[1](([3|5|8][\\d])|([4][4,5,6,7,8,9])|([6][2,5,6,7])|([7][^9])|([9][1,8,9]))[\\d]{8}$";
+        Pattern phoneRegex = Pattern.compile(phoneCheck);
+        Matcher phoneMatcher = phoneRegex.matcher(email);
+        boolean phoneIsMatched = phoneMatcher.matches();
+        System.out.println(phoneIsMatched);
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("is_delete",0);
+        if(emailIsMatched==true){
             queryWrapper.eq("email",email);
-            User user = userService.getOne(queryWrapper);
-            if(user.getIsDelete()==1){
-                return ResultUtil.error("账号已被删除！");
-            }
-            String token = JWT.create().withAudience(user.getId() + "")
-                    .sign(Algorithm.HMAC256(user.getPassword()));
-            jsonObject1.put("respCode","1");
-            int role_id = userService.selectRole(email);
-            jsonObject1.put("role",role_id);
-            jsonObject1.put("token",token);
-            return jsonObject1.toString();
+        }else if(phoneIsMatched==true){
+            queryWrapper.eq("telphone",email);
+        }else{
+            queryWrapper.eq("nickname",email);
         }
-        else{
+
+        JSONObject jsonObject1 = new JSONObject();
+        if(userService.count(queryWrapper)==0){
             jsonObject1.put("respCode","账号或密码错误");
             jsonObject1.put("role","-1");
             return jsonObject1.toString();
+        }else{
+            queryWrapper.eq("password",password);
+            if(userService.count(queryWrapper)==0){
+                jsonObject1.put("respCode","账号或密码错误");
+                jsonObject1.put("role","-1");
+                return jsonObject1.toString();
+            }else{
+                User user = userService.getOne(queryWrapper);
+                String token = JWT.create().withAudience(user.getId() + "")
+                        .sign(Algorithm.HMAC256(user.getPassword()));
+                jsonObject1.put("respCode","1");
+                int role_id = user.getRoleId();
+                jsonObject1.put("role",role_id);
+                jsonObject1.put("token",token);
+                jsonObject1.put("email",user.getEmail());
+                return jsonObject1.toString();
+            }
         }
     }
 
