@@ -59,6 +59,7 @@ public class RegisterController {
             }else{
                 user1.setRoleId(3);
             }
+            userService.save(user1);
             return ResultUtil.success();
         }
     }

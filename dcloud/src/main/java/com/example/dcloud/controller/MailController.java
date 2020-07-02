@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.dcloud.annotation.NoToken;
 import com.example.dcloud.service.MailService;
+import com.example.dcloud.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +31,10 @@ public class MailController {
         String message = "您的注册验证码为："+checkCode;
         try {
             mailService.sendMail(email,"到云注册验证码",message);
-            return checkCode;
+            return ResultUtil.error(checkCode);
         }catch (Exception e){
-            return "请输入真实邮箱";
+            e.printStackTrace();
+            return ResultUtil.error("请输入真实邮箱");
         }
     }
 }

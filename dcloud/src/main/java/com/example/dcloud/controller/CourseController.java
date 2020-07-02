@@ -158,7 +158,12 @@ public class CourseController {
             jsonObject.put("name",user.getName());
             jsonObject.put("sno",user.getSno());
             jsonObject.put("sex",user.getSex());
-            jsonObject.put("exp",list.get(i).getExp());
+            if(list.get(i).getExp() == null){
+                jsonObject.put("exp",0);
+            }else{
+                jsonObject.put("exp",list.get(i).getExp());
+            }
+
             jsonObject.put("email",user.getEmail());
             jsonArray.add(jsonObject);
         }
@@ -186,7 +191,8 @@ public class CourseController {
         Map map = JSON.toJavaObject(jsonObject, Map.class);
         if(map.get("code") != null){//学生使用班课号加入班课
             QueryWrapper<Course> queryWrapper = new QueryWrapper();
-            queryWrapper.eq("code",map.get("code"));
+            queryWrapper.eq("code",map.get("code"))
+                        .eq("isDelete",0);
             Course course = courseService.getOne(queryWrapper);
             if(course!=null){
                 if(map.get("email") != null){
@@ -201,7 +207,8 @@ public class CourseController {
                     //判断是否已经加入过
                     QueryWrapper<CourseStudent> queryJoined = new QueryWrapper();
                     queryJoined.eq("course_id",course.getId())
-                                .eq("student_email",map.get("email"));
+                                .eq("student_email",map.get("email"))
+                                .eq("is_delete",0);
                     int count = courseStudentService.count(queryJoined);
                     if (count > 0) {
                         return ResultUtil.error("您已加入本班课，请勿重复加入！");
@@ -345,7 +352,6 @@ public class CourseController {
             }
         }
         courseService.updateById(course);
-
 //        return JSON.toJSONString(courseService.getOne(queryWrapper));
         return ResultUtil.success();
     }
