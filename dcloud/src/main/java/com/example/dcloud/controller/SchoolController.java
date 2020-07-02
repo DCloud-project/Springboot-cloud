@@ -115,8 +115,9 @@ public class SchoolController {
         if(code == null || code.equals("0")){
             return "未设置";
         }
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("code",code);
+        QueryWrapper<School> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("code",code)
+                    .eq("is_delete",0);
         School school1 = schoolService.getOne(queryWrapper);
         return school1.getName();
     }
