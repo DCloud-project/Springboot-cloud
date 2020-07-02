@@ -75,7 +75,7 @@ public class AttendenceResultController {
             List<SystemManage> list = systemManageService.list();
             int systemDistance = list.get(0).getAttendDistance();
 
-            if(systemDistance==0&&distance<systemDistance){
+            if(systemDistance==0&&distance<=systemDistance){
                 Date d = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
                 sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
@@ -242,7 +242,7 @@ public class AttendenceResultController {
             long courseId = course.getId();
             QueryWrapper<CourseStudent> queryWrapper3 = new QueryWrapper<>();
             queryWrapper3.eq("course_id",courseId)
-                    .eq("email",email);
+                    .eq("student_email",email);
             CourseStudent courseStudent = courseStudentService.getOne(queryWrapper3);
             int exp1 = courseStudent.getExp();
 

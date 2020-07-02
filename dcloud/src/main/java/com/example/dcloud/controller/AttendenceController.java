@@ -138,6 +138,7 @@ public class AttendenceController {
     public String getAttendence(@RequestBody JSONObject jsonObject) {
         Map map = JSON.toJavaObject(jsonObject, Map.class);
         String code = map.get("code").toString();
+        System.out.println(map.get("attend_id").toString());
         int attend_id = Integer.parseInt(map.get("attend_id").toString());
         QueryWrapper<AttendenceResult> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("attend_id",attend_id);
