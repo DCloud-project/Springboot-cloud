@@ -30,11 +30,10 @@ public class RegisterController {
         Map map = JSON.toJavaObject(jsonObject,Map.class);
         String email = (String) map.get("email");
         String password = (String) map.get("password");
-        User user = new User();
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        user.setEmail(email);
+        queryWrapper.eq("email",email);
         int count = userService.count(queryWrapper);
-        if(count==1){
+        if(count>0){
             return ResultUtil.error("该邮箱已经注册过了！");
         }
         else{

@@ -28,9 +28,9 @@ public class MailController {
         Map map = JSON.toJavaObject(jsonObject,Map.class);
         String email = (String) map.get("email");
         String checkCode = String.valueOf(new Random().nextInt(899999)+100000);
-        String message = "您的注册验证码为："+checkCode;
+        String message = "您的验证码为："+checkCode;
         try {
-            mailService.sendMail(email,"到云注册验证码",message);
+            mailService.sendMail(email,"到云验证码",message);
             return ResultUtil.error(checkCode);
         }catch (Exception e){
             e.printStackTrace();
