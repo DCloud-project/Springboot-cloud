@@ -81,13 +81,15 @@ public class MenuController {
         }
         //名称不能重复
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name",map.get("name").toString());
+        queryWrapper.eq("name",map.get("name").toString())
+                    .eq("is_deleted",0);
         int count = menuService.count(queryWrapper);
         if(count > 0){
             return ResultUtil.error("菜单名称不允许重复！");
         }
-        QueryWrapper queryWrapper1 = new QueryWrapper();
-        queryWrapper1.eq("name",map.get("parent_name").toString());
+        QueryWrapper<Menu> queryWrapper1 = new QueryWrapper();
+        queryWrapper1.eq("name",map.get("parent_name").toString())
+                     .eq("is_deleted",0);
         Menu menu1 = menuService.getOne(queryWrapper1);
         if(menu1 == null){
             menu.setParentId(parseLong("0"));
@@ -123,8 +125,9 @@ public class MenuController {
             long b = (int)a;
             menu.setParentId(b);
         }else{
-            QueryWrapper queryWrapper1 = new QueryWrapper();
-            queryWrapper1.eq("name",map.get("parent_name").toString());
+            QueryWrapper<Menu> queryWrapper1 = new QueryWrapper();
+            queryWrapper1.eq("name",map.get("parent_name").toString())
+                         .eq("is_deleted",0);
             Menu menu1 = menuService.getOne(queryWrapper1);
             menu.setParentId(menu1.getId());
         }

@@ -46,9 +46,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public String queryList(String name,Integer page,Integer is_visible) {
         QueryWrapper<Menu> queryWrapper =  new QueryWrapper<>();
-        queryWrapper.eq("is_deleted",0)
-                .eq("is_visible",is_visible)
-                .like("name",name);
+        if(is_visible == null){
+            queryWrapper.eq("is_deleted",0)
+                    .like("name",name);
+        }else{
+            queryWrapper.eq("is_deleted",0)
+                    .eq("is_visible",is_visible)
+                    .like("name",name);
+        }
+
 //        queryWrapper.lambda().eq(Menu::getIsDeleted, 0).and(
 //                queryWrapper1 -> queryWrapper1.eq(Menu::getIsVisible,is_visible)
 //                        .like(Menu::getName,name));
@@ -125,6 +131,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             temp.remove("parent_id");
         }
         sortList(retultList);
+        System.out.println(retultList);
         return retultList;
     }
     public List<Map<String,Object>> sortList(List<Map<String,Object>> list){
@@ -133,8 +140,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             @Override
             public int compare(Map<String, Object> o1, Map<String, Object> o2) {
                 Integer name1 = Integer.valueOf(o1.get("menu_order").toString()) ;//name1是从你list里面拿出来的一个
-                Integer name2 = Integer.valueOf(o2.get("menu_order").toString()) ; //name1是从你list里面拿出来的第二个name
-                return o1.get("menu_order").toString().compareTo(o2.get("menu_order").toString());
+                Integer name2 = Integer.valueOf(o2.get("menu_order").toString()) ; //name2是从你list里面拿出来的第二个name
+                return name1.compareTo(name2);
             }
         });
         return list;
