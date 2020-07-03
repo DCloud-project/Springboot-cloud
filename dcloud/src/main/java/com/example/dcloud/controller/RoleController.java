@@ -6,6 +6,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.dcloud.entity.Role;
 import com.example.dcloud.service.RoleService;
 import com.example.dcloud.util.ResultUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -90,7 +92,7 @@ public class RoleController {
         role.setIsDelete(1);
         try{
             //输出日志
-            LOG.info("======deleteRole======删除角色成功，删除id为：{}"，id);
+            LOG.info("======deleteRole======删除角色成功，删除id为：{}",id);
             roleService.updateById(role);
             return ResultUtil.success();
         }catch (Exception e){

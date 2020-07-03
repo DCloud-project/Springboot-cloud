@@ -59,7 +59,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
             }
         });
+
         for (int i = 0; i < jsonArr.size(); i++) {
+
             jsonValues.get(i).put("index",i);
             sortedJsonArray.add(jsonValues.get(i));
         }

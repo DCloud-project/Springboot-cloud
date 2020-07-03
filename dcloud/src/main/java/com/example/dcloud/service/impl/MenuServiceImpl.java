@@ -131,7 +131,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             temp.remove("parent_id");
         }
         sortList(retultList);
-        System.out.println(retultList);
         return retultList;
     }
     public List<Map<String,Object>> sortList(List<Map<String,Object>> list){

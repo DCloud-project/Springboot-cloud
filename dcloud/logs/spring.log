@@ -1,0 +1,17 @@
+2020-07-03 23:34:10.221  INFO 6372 --- [main] com.example.dcloud.DcloudApplication     : Starting DcloudApplication on LAPTOP-7JFC1EN2 with PID 6372 (C:\Users\Administrator\Desktop\lastcode\Springboot-cloud\dcloud\target\classes started by Administrator in C:\Users\Administrator\Desktop\lastcode\Springboot-cloud\dcloud)
+2020-07-03 23:34:10.236  INFO 6372 --- [main] com.example.dcloud.DcloudApplication     : No active profile set, falling back to default profiles: default
+2020-07-03 23:34:15.426  INFO 6372 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-07-03 23:34:15.449  INFO 6372 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-07-03 23:34:15.456  INFO 6372 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-07-03 23:34:15.459  INFO 6372 --- [main] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.14] of the APR based Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2020-07-03 23:34:15.459  INFO 6372 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded APR based Apache Tomcat Native library [1.2.14] using APR version [1.6.2].
+2020-07-03 23:34:15.459  INFO 6372 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2020-07-03 23:34:15.460  INFO 6372 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2020-07-03 23:34:16.521  INFO 6372 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.0.2l  25 May 2017]
+2020-07-03 23:34:16.793  INFO 6372 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-07-03 23:34:16.794  INFO 6372 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 6279 ms
+2020-07-03 23:34:17.506  INFO 6372 --- [main] com.zaxxer.hikari.HikariDataSource       : DatebookHikariCP - Starting...
+2020-07-03 23:34:18.485  INFO 6372 --- [main] com.zaxxer.hikari.HikariDataSource       : DatebookHikariCP - Start completed.
+2020-07-03 23:34:21.041  INFO 6372 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-07-03 23:34:21.606  INFO 6372 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-07-03 23:34:21.621  INFO 6372 --- [main] com.example.dcloud.DcloudApplication     : Started DcloudApplication in 12.626 seconds (JVM running for 13.939)
