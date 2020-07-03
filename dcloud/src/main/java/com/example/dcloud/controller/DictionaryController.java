@@ -190,7 +190,7 @@ public class DictionaryController {
             valueSet.add(temp.get("value").toString());
             int afterSize = valueSet.size();
             if(beforeSize == afterSize){
-                return ResultUtil.error("数据项值已存在！");
+                return ResultUtil.error("数据项值不允许重复！");
             }else {
                 beforeSize = afterSize;
             }

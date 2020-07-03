@@ -35,6 +35,7 @@ public class DictionaryDetailServiceImpl extends ServiceImpl<DictionaryDetailMap
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("code", code);
+        map.put("is_delete", 0);
         List<Dictionary> list1 = dictionaryMapper.selectByMap(map);
         Map<String, Object> detailMap = new HashMap<String, Object>();
         detailMap.put("type_code", code);
@@ -43,6 +44,7 @@ public class DictionaryDetailServiceImpl extends ServiceImpl<DictionaryDetailMap
         Map<Object,List> list = new HashMap<>();
         list.put("dict",list1);
         list.put("detail",list2);
+        System.out.println(list);
         return list;
     }
 }
