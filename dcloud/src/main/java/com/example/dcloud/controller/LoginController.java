@@ -29,6 +29,8 @@ public class LoginController {
     @Autowired
     RoleService roleService;
 
+    private static final Logger LOG = LoggerFactory.getLogger(LoginController.class);
+
     @NoToken
     @PostMapping(value = "/loginByPassword")
     public String loginByPassword(@RequestBody JSONObject jsonObject)
@@ -60,16 +62,25 @@ public class LoginController {
 
         JSONObject jsonObject1 = new JSONObject();
         if(userService.count(queryWrapper)==0){
+            //输出日志
+            LOG.info("======loginByPassword======email：{}, password：{}===登录失败（账号或密码错误）",email,password);
+
             jsonObject1.put("respCode","账号或密码错误");
             jsonObject1.put("role","-1");
             return jsonObject1.toString();
         }else{
             queryWrapper.eq("password",password);
             if(userService.count(queryWrapper)==0){
+                //输出日志
+                LOG.info("======loginByPassword======email：{}, password：{}===登录失败（账号或密码错误）",email,password);
+
                 jsonObject1.put("respCode","账号或密码错误");
                 jsonObject1.put("role","-1");
                 return jsonObject1.toString();
             }else{
+                //输出日志
+                LOG.info("======loginByPassword======email：{}, password：{}===登录成功",email,password);
+
                 User user = userService.getOne(queryWrapper);
                 String token = JWT.create().withAudience(user.getId() + "")
                         .sign(Algorithm.HMAC256(user.getPassword()));
@@ -99,6 +110,10 @@ public class LoginController {
             }
             String token = JWT.create().withAudience(user.getId() + "")
                     .sign(Algorithm.HMAC256(user.getPassword()));
+
+            //输出日志
+            LOG.info("======loginByCode验证码登录======email：{}===登录成功",email);
+
             jsonObject1.put("respCode","1");
             int role_id = userService.selectRole(email);
             jsonObject1.put("role",role_id);
@@ -106,6 +121,9 @@ public class LoginController {
             return jsonObject1.toString();
         }
         else{
+            //输出日志
+            LOG.info("======loginByCode验证码登录======email：{}===登录失败（账号不存在）",email);
+
             jsonObject1.put("respCode","账号不存在");
             jsonObject1.put("role","-1");
             return jsonObject1.toString();

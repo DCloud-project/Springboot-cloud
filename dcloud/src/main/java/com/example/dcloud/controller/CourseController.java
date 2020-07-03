@@ -42,6 +42,9 @@ public class CourseController {
     private CourseStudentService courseStudentService;
     @Autowired
     private UserService userService;
+
+    private static final Logger LOG = LoggerFactory.getLogger(CourseController.class);
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
     public String get(@RequestParam(value="student_email",required = false)String student_email,
@@ -50,6 +53,10 @@ public class CourseController {
                       @RequestParam(value="code",required = false)String code){
 
         if(code != null){//获得班课详情
+
+            //输出日志
+            LOG.info("======CourseController======");
+            
             QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("code",code);
             Course course = courseService.getOne(queryWrapper);

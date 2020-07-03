@@ -27,6 +27,8 @@ public class RoleController {
     @Autowired
     RoleService roleService;
 
+    private static final Logger LOG = LoggerFactory.getLogger(RoleController.class);
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
     public String roleList(@RequestParam(value="page",required = false)Integer page,
@@ -47,9 +49,13 @@ public class RoleController {
         role.setDescription(map.get("description").toString());
         role.setName(map.get("name").toString());
         try {
+            //输出日志
+            LOG.info("======createRole======创建角色成功，name:{}===description:{}",map.get("name").toString(),map.get("description").toString());
             roleService.save(role);
             return ResultUtil.success();
         }catch (Exception e){
+            //输出日志
+            LOG.info("======createRole======创建角色失败");
             return ResultUtil.error("创建失败");
         }
     }
@@ -64,9 +70,13 @@ public class RoleController {
         role.setDescription(map.get("description").toString());
         role.setName(map.get("name").toString());
         try{
+            //输出日志
+            LOG.info("======updateRole======更新角色成功");
             roleService.updateById(role);
             return ResultUtil.success();
         }catch (Exception e){
+            //输出日志
+            LOG.info("======updateRole======更新角色失败");
             return ResultUtil.error("更新失败");
         }
     }
@@ -79,9 +89,13 @@ public class RoleController {
         role.setId(id);
         role.setIsDelete(1);
         try{
+            //输出日志
+            LOG.info("======deleteRole======删除角色成功，删除id为：{}"，id);
             roleService.updateById(role);
             return ResultUtil.success();
         }catch (Exception e){
+            //输出日志
+            LOG.info("======deleteRole======删除角色失败");
             return ResultUtil.error("删除失败");
         }
     }

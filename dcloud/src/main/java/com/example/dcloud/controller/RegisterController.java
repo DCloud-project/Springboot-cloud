@@ -22,6 +22,8 @@ public class RegisterController {
     @Autowired
     UserService userService;
 
+    private static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
+
     @ResponseBody
     @NoToken
     @RequestMapping(method = RequestMethod.POST)
@@ -34,9 +36,14 @@ public class RegisterController {
         queryWrapper.eq("email",email);
         int count = userService.count(queryWrapper);
         if(count>0){
+            //输出日志
+            LOG.info("======register======email：{}, password：{}===注册失败（该邮箱已经注册过了）",email,password);
             return ResultUtil.error("该邮箱已经注册过了！");
         }
         else{
+            //输出日志
+            LOG.info("======register======email：{}, password：{}===注册成功",email,password);
+            
             User user1 = new User();
             user1.setEmail(email);
             user1.setExp(0);

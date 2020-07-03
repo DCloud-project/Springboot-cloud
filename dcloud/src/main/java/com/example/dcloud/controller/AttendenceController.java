@@ -30,6 +30,8 @@ import java.util.TimeZone;
 @RequestMapping("/attendence")
 public class AttendenceController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AttendenceController.class);
+
     @Autowired
     private AttendenceService attendenceService;
     @Autowired
@@ -53,6 +55,10 @@ public class AttendenceController {
         Date d = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+
+        //输出日志
+        LOG.info("======attendence签到===开始时间：{}===code：{}, local：{}",sdf.format(d),map.get("code").toString(),map.get("local").toString());
+        
         attendence.setStartTime(sdf.format(d));
         attendence.setIsDelete(0);
         attendenceService.saveOrUpdate(attendence);
