@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.example.dcloud.entity.*;
 import com.example.dcloud.service.*;
 import com.example.dcloud.util.ResultUtil;
@@ -46,6 +47,42 @@ public class AttendenceController {
     private CourseService courseService;
     @Autowired
     private SystemManageService systemManageService;
+
+    @ResponseBody
+    @RequestMapping(value = "/isEnd",method = RequestMethod.POST)
+    public String hasAttendence(@RequestBody JSONObject jsonObject) {
+        Map map = JSON.toJavaObject(jsonObject, Map.class);
+        QueryWrapper<Attendence> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code",map.get("code").toString())
+                    .eq("is_delete",0);
+        int count = attendenceService.count(queryWrapper);
+        if(count > 0){
+            //有未结束签到
+            return ResultUtil.error("0");
+        }else{
+            return ResultUtil.success();
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/end",method = RequestMethod.POST)
+    public String endPriorAttendence(@RequestBody JSONObject jsonObject) {
+        Map map = JSON.toJavaObject(jsonObject, Map.class);
+        QueryWrapper<Attendence> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code",map.get("code").toString())
+                    .eq("is_delete",0);
+        Attendence attendence = new Attendence();
+        attendence.setIsDelete(1);
+        attendenceService.update(attendence,queryWrapper);
+        return ResultUtil.success();
+//        int  = attendenceService.count(queryWrapper);
+//        if(count > 0){
+//            //有未结束签到
+//            return ResultUtil.error("0");
+//        }else{
+//            return ResultUtil.success();
+//        }
+    }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)

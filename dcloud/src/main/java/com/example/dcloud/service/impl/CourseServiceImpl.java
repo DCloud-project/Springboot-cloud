@@ -112,14 +112,33 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     public String getRank(String jsonArr, String email) {
         JSONArray searchResult = JSON.parseArray(jsonArr);
         JSONObject result = new JSONObject();
-        for(int i = 0 ; i < searchResult.size(); i++){
-            JSONObject member = JSON.parseObject(searchResult.get(i).toString());
-            if(member.get("email").toString().equals(email)){
-                result.put("rank",parseInt(member.get("index").toString())+1);
-                result.put("exp",member.get("exp").toString());
-                break;
-            }
+//        for(int i = 0 ; i < searchResult.size(); i++){
+//            JSONObject member = JSON.parseObject(searchResult.get(i).toString());
+//            if(member.get("email").toString().equals(email)){
+//                result.put("rank",parseInt(member.get("index").toString())+1);
+//                result.put("exp",member.get("exp").toString());
+//                break;
+//            }
+//        }
+
+        int rank = 1;
+        int exp = parseInt(JSON.parseObject(searchResult.get(0).toString()).get("exp").toString());
+        if(JSON.parseObject(searchResult.get(0).toString()).get("email").toString().equals(email)) {
+            result.put("rank",1);
+            result.put("exp",JSON.parseObject(searchResult.get(0).toString()).get("exp").toString().toString());
         }
+            //大--->小
+            for(int i = 1 ; i < searchResult.size(); i++){
+                JSONObject member = JSON.parseObject(searchResult.get(i).toString());
+                if(parseInt(member.get("exp").toString()) < exp){//说明经验值不等
+                    rank++;
+                }
+                if(member.get("email").toString().equals(email)){
+                    result.put("rank",rank);
+                    result.put("exp",member.get("exp").toString());
+                    break;
+                }
+            }
         return JSON.toJSONString(result);
     }
 }

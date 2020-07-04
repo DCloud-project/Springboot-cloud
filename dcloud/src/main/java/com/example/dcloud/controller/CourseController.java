@@ -167,6 +167,7 @@ public class CourseController {
             jsonObject.put("name",user.getName());
             jsonObject.put("sno",user.getSno());
             jsonObject.put("sex",user.getSex());
+            jsonObject.put("email",user.getEmail());
             if(list.get(i).getExp() == null){
                 jsonObject.put("exp",0);
             }else{
