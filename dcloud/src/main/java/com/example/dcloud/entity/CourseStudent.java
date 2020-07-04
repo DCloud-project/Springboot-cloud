@@ -30,6 +30,11 @@ private static final long serialVersionUID=1L;
 
     private int isDelete;
 
+    public CourseStudent(){
+        this.isDelete = 0;
+        this.exp = 0;
+    }
+
     public Integer getExp() {
         return exp;
     }

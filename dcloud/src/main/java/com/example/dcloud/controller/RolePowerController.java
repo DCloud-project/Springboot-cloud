@@ -2,7 +2,6 @@ package com.example.dcloud.controller;
 
 
 import com.example.dcloud.entity.Role;
-import com.example.dcloud.service.PowerService;
 import com.example.dcloud.service.RolePowerService;
 import com.example.dcloud.service.RoleService;
 import com.example.dcloud.util.ResultUtil;
@@ -25,8 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/rolePower")
 public class RolePowerController {
-    @Autowired
-    PowerService powerService;
     @Autowired
     RolePowerService rolePowerService;
     @Autowired

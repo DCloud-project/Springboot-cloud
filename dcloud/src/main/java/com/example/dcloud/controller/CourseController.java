@@ -8,9 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.dcloud.entity.*;
-import com.example.dcloud.service.CourseService;
-import com.example.dcloud.service.CourseStudentService;
-import com.example.dcloud.service.UserService;
+import com.example.dcloud.service.*;
 import com.example.dcloud.util.ResultUtil;
 import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
@@ -40,6 +38,8 @@ import static java.lang.Long.parseLong;
 public class CourseController {
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private AttendenceResultService attendenceResultService;
     @Autowired
     private CourseStudentService courseStudentService;
     @Autowired
@@ -381,6 +381,14 @@ public class CourseController {
             CourseStudent courseStudent = new CourseStudent();
             courseStudent.setIsDelete(1);
             courseStudentService.update(courseStudent,queryWrapper1);
+
+            //清空签到历史记录
+            QueryWrapper<AttendenceResult> queryHistory = new QueryWrapper<>();
+            queryHistory.eq("code",map.get("code"))
+                        .eq("student_email",map.get("email"));
+            AttendenceResult attendenceResult = new AttendenceResult();
+            attendenceResult.setIsDelete(3);
+            attendenceResultService.update(attendenceResult,queryHistory);
             return ResultUtil.success();
         }
         Course course = new Course();
