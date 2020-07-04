@@ -107,6 +107,7 @@ public class AttendenceResultController {
         //该课程所有的签到
         List<Attendence> list = attendenceService.list(queryWrapper);
         int k = 0;//该生的签到次数
+        int total = list.size();//总次数
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < list.size(); i++) {
             String startTime = list.get(i).getStartTime();
@@ -114,15 +115,26 @@ public class AttendenceResultController {
             QueryWrapper<AttendenceResult> queryWrapper1 = new QueryWrapper<>();
             queryWrapper1.eq("attend_id", attendId)
                     .eq("student_email", email);
-            int count = attendenceResultService.count(queryWrapper1);
+            AttendenceResult attendenceResult = attendenceResultService.getOne(queryWrapper1);
+            int count;
+            int flag = attendenceResult.getIsDelete();
+            if(attendenceResult==null)
+            {
+                count=0;
+            }else{
+                if(flag==3){
+                    total = total - 1;
+                    continue;
+                }
+                else
+                    count=1;
+            }
             JSONObject jsonObject1 = new JSONObject();
             jsonObject1.put("time", startTime);
 
             if(count==0){
                 jsonObject1.put("type", "缺勤");
             }else{
-                AttendenceResult attendenceResult = attendenceResultService.getOne(queryWrapper1);
-                int flag = attendenceResult.getIsDelete();
                 if (flag == 2)
                     jsonObject1.put("type", "缺勤");
                 else if(flag==0){
@@ -135,10 +147,10 @@ public class AttendenceResultController {
             jsonArray.add(jsonObject1);
         }
         String strPer;
-        if(list.size()==0)
+        if(total==0)
             strPer = "";
         else{
-            int per = k * 100/ list.size() ;
+            int per = k * 100/ total ;
             strPer = per + "%";
         }
         JSONObject jsonObject1 = new JSONObject();
