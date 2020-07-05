@@ -318,3 +318,12 @@ java.lang.IllegalArgumentException: The HTTP header line [referer:http://localho
 2020-07-05 13:17:43.044  INFO 34748 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
 2020-07-05 13:17:43.046  INFO 34748 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : DatebookHikariCP - Shutdown initiated...
 2020-07-05 13:17:43.060  INFO 34748 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : DatebookHikariCP - Shutdown completed.
+2020-07-05 14:38:45.924  INFO 61608 --- [main] c.example.dcloud.DcloudApplicationTests  : Starting DcloudApplicationTests on LAPTOP-71E8V25C with PID 61608 (started by chenwenju in D:\Users\chenwenju\Documents\GitHub\Springboot-cloud\dcloud)
+2020-07-05 14:38:45.926  INFO 61608 --- [main] c.example.dcloud.DcloudApplicationTests  : No active profile set, falling back to default profiles: default
+2020-07-05 14:38:47.273  INFO 61608 --- [main] com.zaxxer.hikari.HikariDataSource       : DatebookHikariCP - Starting...
+2020-07-05 14:38:47.920  INFO 61608 --- [main] com.zaxxer.hikari.HikariDataSource       : DatebookHikariCP - Start completed.
+2020-07-05 14:38:49.104  INFO 61608 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-07-05 14:38:49.452  INFO 61608 --- [main] c.example.dcloud.DcloudApplicationTests  : Started DcloudApplicationTests in 3.772 seconds (JVM running for 4.75)
+2020-07-05 14:38:49.664  INFO 61608 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-07-05 14:38:49.667  INFO 61608 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : DatebookHikariCP - Shutdown initiated...
+2020-07-05 14:38:49.677  INFO 61608 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : DatebookHikariCP - Shutdown completed.
