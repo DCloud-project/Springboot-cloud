@@ -64,8 +64,6 @@ public class AttendenceResultController {
             QueryWrapper<AttendenceResult> queryWrapper1 = new QueryWrapper<>();
             queryWrapper1.eq("student_email", email)
                     .eq("attend_id", attendId);
-            if (attendenceResultService.count(queryWrapper1) != 0)
-                return ResultUtil.error("请勿重复签到！");
 
             String teacherLocal = attendence.getLocal();
             Double distance = DistanceUtil.getDistanceMeter(teacherLocal,studentLocal);
@@ -75,16 +73,20 @@ public class AttendenceResultController {
             List<SystemManage> list = systemManageService.list();
             int systemDistance = list.get(0).getAttendDistance();
 
+            Date d = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
+            sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+            AttendenceResult attendenceResult = new AttendenceResult();
+            attendenceResult.setAttendTime(sdf.format(d));
+            attendenceResult.setCode(code);
+            attendenceResult.setStudentEmail(email);
+            attendenceResult.setAttendId(attendId);
+            attendenceResult.setIsDelete(0);
+
+            if (attendenceResultService.count(queryWrapper1) != 0)
+                return ResultUtil.error("请勿重复签到！");
+
             if(systemDistance==0&&distance<=systemDistance){
-                Date d = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
-                sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-                AttendenceResult attendenceResult = new AttendenceResult();
-                attendenceResult.setAttendTime(sdf.format(d));
-                attendenceResult.setCode(code);
-                attendenceResult.setStudentEmail(email);
-                attendenceResult.setAttendId(attendId);
-                attendenceResult.setIsDelete(0);
                 attendenceResultService.save(attendenceResult);
                 return sdf.format(d);
             }else{
