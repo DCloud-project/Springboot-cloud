@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.example.dcloud.entity.*;
 import com.example.dcloud.service.*;
 import com.example.dcloud.util.ResultUtil;
@@ -72,7 +71,7 @@ public class AttendenceController {
         queryWrapper.eq("code",map.get("code").toString())
                     .eq("is_delete",0);
         Attendence attendence = new Attendence();
-        attendence.setIsDelete(1);
+        attendence.setIsDelete(2);
         attendenceService.update(attendence,queryWrapper);
         return ResultUtil.success();
 //        int  = attendenceService.count(queryWrapper);
@@ -183,7 +182,7 @@ public class AttendenceController {
     public String getAttendence(@RequestBody JSONObject jsonObject) {
         Map map = JSON.toJavaObject(jsonObject, Map.class);
         String code = map.get("code").toString();
-        System.out.println(map.get("attend_id").toString());
+//        System.out.println(map.get("attend_id").toString());
         int attend_id = Integer.parseInt(map.get("attend_id").toString());
         QueryWrapper<AttendenceResult> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("attend_id",attend_id);
