@@ -117,7 +117,10 @@ public class AttendenceResultController {
                     .eq("student_email", email);
             AttendenceResult attendenceResult = attendenceResultService.getOne(queryWrapper1);
             int count;
-            int flag = attendenceResult.getIsDelete();
+            int flag = 0;
+            if(attendenceResult != null){
+                flag = attendenceResult.getIsDelete();
+            }
             if(attendenceResult==null)
             {
                 count=0;

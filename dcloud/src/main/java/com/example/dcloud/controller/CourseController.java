@@ -386,9 +386,15 @@ public class CourseController {
             QueryWrapper<AttendenceResult> queryHistory = new QueryWrapper<>();
             queryHistory.eq("code",map.get("code"))
                         .eq("student_email",map.get("email"));
-            AttendenceResult attendenceResult = new AttendenceResult();
-            attendenceResult.setIsDelete(3);
-            attendenceResultService.update(attendenceResult,queryHistory);
+
+            List<AttendenceResult> list = attendenceResultService.list(queryHistory);
+            for(int i = 0; i < list.size(); i++){
+                AttendenceResult attendenceResult = new AttendenceResult();
+                attendenceResult.setId(list.get(i).getId());
+                attendenceResult.setIsDelete(3);
+                attendenceResultService.updateById(attendenceResult);
+            }
+
             return ResultUtil.success();
         }
         Course course = new Course();
