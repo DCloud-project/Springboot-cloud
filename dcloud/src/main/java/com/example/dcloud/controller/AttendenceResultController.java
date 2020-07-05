@@ -119,11 +119,13 @@ public class AttendenceResultController {
                     .eq("student_email", email);
             AttendenceResult attendenceResult = attendenceResultService.getOne(queryWrapper1);
             int count;
-            int flag = attendenceResult.getIsDelete();
+            int flag;
             if(attendenceResult==null)
             {
+                flag=0;
                 count=0;
             }else{
+                flag = attendenceResult.getIsDelete();
                 if(flag==3){
                     total = total - 1;
                     continue;
