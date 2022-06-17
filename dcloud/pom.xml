@@ -106,7 +106,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.57</version>
+            <version>1.2.83</version>
         </dependency>
 
         <!-- qq wx 联合登陆需要的依赖 commons-io， commons-lang3，httpclient，fastjson-->
